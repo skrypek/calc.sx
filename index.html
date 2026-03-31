@@ -8,7 +8,8 @@
     name="description"
     content="CalcSX is a desktop tool for superconducting coil analysis with B-field, Lorentz force density, hoop stress, geometry inference, and exportable results."
   />
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+  <link rel="icon" type="image/png" href="favicon.png" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/png" href="favicon-light.png" media="(prefers-color-scheme: light)">
   <link rel="apple-touch-icon" href="app-icon.png">
   <meta name="theme-color" content="#020203">
   <link rel="stylesheet" href="styles.css" />
@@ -21,7 +22,10 @@
 
   <header class="site-header">
     <div class="brand">
-      <img class="brand-logo" src="app-icon.png" alt="CalcSX app icon" />
+      <picture>
+        <source srcset="app-icon.png" media="(prefers-color-scheme: dark)">
+        <img class="brand-logo" src="app-icon-light.png" alt="CalcSX app icon" />
+      </picture>
       <div>
         <div class="brand-name">CalcSX<span class="tm">™</span></div>
         <div class="brand-sub">Superconducting coil analysis desktop software</div>
@@ -83,7 +87,10 @@
 
       <div class="hero-visual">
         <div class="hero-icon-card">
-          <img src="app-icon.png" alt="CalcSX icon artwork" class="hero-icon" />
+          <picture>
+            <source srcset="app-icon.png" media="(prefers-color-scheme: dark)">
+            <img src="app-icon-light.png" alt="CalcSX icon artwork" class="hero-icon" />
+          </picture>
           <div class="hero-icon-caption">
             Clean interface. Scientific outputs. Minimal fluff.
           </div>
