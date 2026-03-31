@@ -1,16 +1,474 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>CalcSX</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CalcSX — Superconducting Coil Analysis</title>
+  <meta
+    name="description"
+    content="CalcSX is a desktop tool for superconducting coil analysis with B-field, Lorentz force density, hoop stress, geometry inference, and exportable results."
+  />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <h1>CalcSX</h1>
-    <p>Minimal, fast, no-fluff calculations.</p>
+  <div class="bg-orb orb-yellow"></div>
+  <div class="bg-orb orb-cyan"></div>
+  <div class="bg-orb orb-violet"></div>
+  <div class="bg-grid"></div>
 
-    <div class="card">
-        <p>This site is live via GitHub Pages + custom domain.</p>
+  <header class="site-header">
+    <div class="brand">
+      <img class="brand-logo" src="app-icon.png" alt="CalcSX app icon" />
+      <div>
+        <div class="brand-name">CalcSX<span class="tm">™</span></div>
+        <div class="brand-sub">Superconducting coil analysis desktop software</div>
+      </div>
     </div>
+
+    <nav class="nav">
+      <a href="#features">Features</a>
+      <a href="#workflow">Workflow</a>
+      <a href="#demos">Demos</a>
+      <a href="#download">Download</a>
+      <a href="https://github.com/skrypek/calcsx" target="_blank" rel="noreferrer">GitHub</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero panel glow-panel">
+      <div class="hero-copy">
+        <div class="eyebrow">Desktop scientific software</div>
+        <h1>
+          Coil geometry in,
+          <span class="accent">field, force, and stress</span>
+          out.
+        </h1>
+        <p class="hero-text">
+          CalcSX is a technical desktop interface for superconducting coil analysis:
+          B-field evaluation, Lorentz force density, hoop stress, geometry inspection,
+          and export-ready results in one workflow.
+        </p>
+
+        <div class="hero-actions">
+          <a class="button button-primary" href="https://github.com/skrypek/calcsx" target="_blank" rel="noreferrer">
+            View Repository
+          </a>
+          <a class="button button-secondary" href="#download">
+            Download Preview
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-card">
+            <div class="stat-value">B</div>
+            <div class="stat-label">Field analysis</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">J×B</div>
+            <div class="stat-label">Force density</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">σθ</div>
+            <div class="stat-label">Hoop stress</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">PCA</div>
+            <div class="stat-label">Geometry inference</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-icon-card">
+          <img src="app-icon.png" alt="CalcSX icon artwork" class="hero-icon" />
+          <div class="hero-icon-caption">
+            Clean interface. Scientific outputs. Minimal fluff.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="feature-strip">
+      <div class="mini-panel">
+        <span class="mini-kicker">Input</span>
+        <strong>CSV coil centerline</strong>
+      </div>
+      <div class="mini-panel">
+        <span class="mini-kicker">Numerics</span>
+        <strong>Vectorized core</strong>
+      </div>
+      <div class="mini-panel">
+        <span class="mini-kicker">Outputs</span>
+        <strong>Plots + CSV export</strong>
+      </div>
+      <div class="mini-panel">
+        <span class="mini-kicker">App</span>
+        <strong>Desktop workflow</strong>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <div class="section-head">
+        <div class="eyebrow">Core capabilities</div>
+        <h2>Built around the actual workflow</h2>
+        <p>
+          Geometry ingestion, automatic structure inference, field and force evaluation,
+          stress diagnostics, and export-ready outputs.
+        </p>
+      </div>
+
+      <div class="feature-grid">
+        <article class="panel feature-card glow-panel">
+          <div class="icon">◎</div>
+          <h3>B-field analysis</h3>
+          <p>Compute centroid and on-axis field behavior, with optional cross-section sampling.</p>
+        </article>
+
+        <article class="panel feature-card glow-panel">
+          <div class="icon">↗</div>
+          <h3>Lorentz force density</h3>
+          <p>Resolve segment-wise J×B forces along the arc for engineering interpretation.</p>
+        </article>
+
+        <article class="panel feature-card glow-panel">
+          <div class="icon">◔</div>
+          <h3>Hoop stress</h3>
+          <p>Inspect membrane-based hoop stress trends in MPa across the coil path.</p>
+        </article>
+
+        <article class="panel feature-card glow-panel">
+          <div class="icon">△</div>
+          <h3>PCA inference</h3>
+          <p>Infer symmetry direction and detect planar structure automatically.</p>
+        </article>
+
+        <article class="panel feature-card glow-panel">
+          <div class="icon">≈</div>
+          <h3>Configurable numerics</h3>
+          <p>Tune grid density and on-axis samples for the speed-detail balance you want.</p>
+        </article>
+
+        <article class="panel feature-card glow-panel">
+          <div class="icon">⇩</div>
+          <h3>Export pipeline</h3>
+          <p>Save results to CSV for follow-on analysis in Python, MATLAB, or spreadsheets.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="workflow" class="section">
+      <div class="section-head">
+        <div class="eyebrow">Workflow</div>
+        <h2>From geometry to diagnostics</h2>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item panel">
+          <span class="step">01</span>
+          <h3>Load CSV</h3>
+          <p>Import 3D centerline coordinates from x, y, z columns.</p>
+        </div>
+        <div class="timeline-item panel">
+          <span class="step">02</span>
+          <h3>Set parameters</h3>
+          <p>Configure current, winds, tape thickness, width, and sampling controls.</p>
+        </div>
+        <div class="timeline-item panel">
+          <span class="step">03</span>
+          <h3>Run analysis</h3>
+          <p>Compute B-field, Lorentz force density, hoop stress, and derived outputs.</p>
+        </div>
+        <div class="timeline-item panel">
+          <span class="step">04</span>
+          <h3>Inspect and export</h3>
+          <p>Review plots and export CSV outputs for downstream use.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="demos" class="section">
+      <div class="section-head">
+        <div class="eyebrow">Interactive panels</div>
+        <h2>Live feature highlights</h2>
+        <p>
+          Static code boxes are useful, but this section also lets the site simulate
+          how different parts of the app feel.
+        </p>
+      </div>
+
+      <div class="demo-layout">
+        <div class="panel tabs-panel glow-panel">
+          <div class="tabs">
+            <button class="tab-button active" data-tab="tab-csv">CSV Input</button>
+            <button class="tab-button" data-tab="tab-run">Run</button>
+            <button class="tab-button" data-tab="tab-export">Export</button>
+          </div>
+
+          <div class="tab-content active" id="tab-csv">
+            <div class="code-header">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+              <span class="file-label">coil.csv</span>
+            </div>
+            <pre class="code-box"><code>x,y,z
+0.1000,0.0000,0.0000
+0.0707,0.0707,0.0010
+0.0000,0.1000,0.0020
+-0.0707,0.0707,0.0010
+-0.1000,0.0000,0.0000
+...</code></pre>
+            <p class="tab-note">Load a centerline, inspect geometry, then run analysis.</p>
+          </div>
+
+          <div class="tab-content" id="tab-run">
+            <div class="code-header">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+              <span class="file-label">terminal</span>
+            </div>
+            <pre class="code-box"><code>python3 -m CalcSX_app.main
+
+# or from inside the app directory
+python3 main.py</code></pre>
+            <p class="tab-note">Launch the desktop app, load geometry, and generate results.</p>
+          </div>
+
+          <div class="tab-content" id="tab-export">
+            <div class="code-header">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+              <span class="file-label">exports</span>
+            </div>
+            <pre class="code-box"><code>exports/
+├── force_density_vs_arc.csv
+├── hoop_stress_vs_arc.csv
+└── on_axis_bfield.csv</code></pre>
+            <p class="tab-note">Export key outputs directly for downstream workflows.</p>
+          </div>
+        </div>
+
+        <div class="panel live-panel glow-panel">
+          <div class="live-head">
+            <div>
+              <div class="eyebrow">Feature highlighter</div>
+              <h3>Pick a subsystem</h3>
+            </div>
+            <div class="selector-wrap">
+              <select id="featureSelect">
+                <option value="vectorized">Vectorized core</option>
+                <option value="grid">Cross-section grid</option>
+                <option value="samples">On-axis samples</option>
+                <option value="export">CSV export</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="live-card" id="liveCard">
+            <div class="live-badge" id="liveBadge">Vectorized core</div>
+            <h4 id="liveTitle">Vectorized vs non-vectorized</h4>
+            <p id="liveText">
+              Simulated comparison of a vectorized numerical core versus a loop-heavy baseline.
+            </p>
+
+            <div id="interactiveArea" class="interactive-area"></div>
+          </div>
+
+          <div class="terminal-box">
+            <div class="terminal-line"><span class="prompt">calc.sx</span> loading geometry...</div>
+            <div class="terminal-line"><span class="prompt">calc.sx</span> detecting axis...</div>
+            <div class="terminal-line"><span class="prompt">calc.sx</span> computing field and force...</div>
+            <div class="terminal-line"><span class="prompt">calc.sx</span> ready</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="download" class="section">
+      <div class="section-head">
+        <div class="eyebrow">Download</div>
+        <h2>Desktop release section</h2>
+        <p>
+          Placeholder downloads for now. These buttons currently serve a simple test file,
+          but the layout is ready for real Windows and Mac releases later.
+        </p>
+      </div>
+
+      <div class="download-grid">
+        <article class="panel download-card glow-panel">
+          <div class="download-icon">⊞</div>
+          <h3>Windows</h3>
+          <p>Planned desktop build for Windows systems.</p>
+          <a class="button button-primary" href="test-download.txt" download>
+            Download test file
+          </a>
+        </article>
+
+        <article class="panel download-card glow-panel">
+          <div class="download-icon">⌘</div>
+          <h3>Mac</h3>
+          <p>Planned desktop build for macOS systems.</p>
+          <a class="button button-primary" href="test-download.txt" download>
+            Download test file
+          </a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div>CalcSX™ — superconducting coil analysis</div>
+    <div class="footer-links">
+      <a href="https://github.com/skrypek/calcsx" target="_blank" rel="noreferrer">Repository</a>
+      <span>MIT License</span>
+    </div>
+  </footer>
+
+  <script>
+    const tabButtons = document.querySelectorAll(".tab-button");
+    const tabContents = document.querySelectorAll(".tab-content");
+
+    tabButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        const target = button.dataset.tab;
+        tabButtons.forEach(btn => btn.classList.remove("active"));
+        tabContents.forEach(tab => tab.classList.remove("active"));
+        button.classList.add("active");
+        document.getElementById(target).classList.add("active");
+      });
+    });
+
+    const featureSelect = document.getElementById("featureSelect");
+    const liveBadge = document.getElementById("liveBadge");
+    const liveTitle = document.getElementById("liveTitle");
+    const liveText = document.getElementById("liveText");
+    const interactiveArea = document.getElementById("interactiveArea");
+
+    const featureMap = {
+      vectorized: {
+        badge: "Vectorized core",
+        title: "Vectorized vs non-vectorized",
+        text: "Simulated comparison of a vectorized numerical core versus a loop-heavy baseline.",
+        render: () => `
+          <div class="compare-block">
+            <div class="compare-row">
+              <div class="compare-label">Non-vectorized</div>
+              <div class="mini-bar"><div class="mini-fill slow-fill"></div></div>
+              <div class="compare-time">8.4 s</div>
+            </div>
+            <div class="compare-row">
+              <div class="compare-label">Vectorized</div>
+              <div class="mini-bar"><div class="mini-fill fast-fill"></div></div>
+              <div class="compare-time">1.2 s</div>
+            </div>
+          </div>
+        `
+      },
+      grid: {
+        badge: "Cross-section grid",
+        title: "Grid density preview",
+        text: "A denser cross-section grid gives more detail at higher compute cost.",
+        render: () => `
+          <div class="grid-demo">
+            <button class="mini-toggle active" data-grid="coarse">Coarse</button>
+            <button class="mini-toggle" data-grid="fine">Fine</button>
+            <div class="grid-preview coarse" id="gridPreview"></div>
+          </div>
+        `
+      },
+      samples: {
+        badge: "On-axis samples",
+        title: "Resolution vs speed",
+        text: "Higher on-axis sample counts improve curve smoothness but take longer to compute.",
+        render: () => `
+          <div class="sample-demo">
+            <input id="sampleSlider" type="range" min="50" max="1000" step="50" value="250" />
+            <div class="sample-readout">
+              <span>Samples: <strong id="sampleValue">250</strong></span>
+              <span>Estimated time: <strong id="sampleTime">0.8 s</strong></span>
+            </div>
+          </div>
+        `
+      },
+      export: {
+        badge: "CSV export",
+        title: "Exportable result set",
+        text: "The app is built to move outputs into downstream analysis quickly.",
+        render: () => `
+          <div class="export-demo">
+            <label class="export-item"><input type="checkbox" checked /> force_density_vs_arc.csv</label>
+            <label class="export-item"><input type="checkbox" checked /> hoop_stress_vs_arc.csv</label>
+            <label class="export-item"><input type="checkbox" checked /> on_axis_bfield.csv</label>
+            <button class="export-button">Simulate export</button>
+          </div>
+        `
+      }
+    };
+
+    function renderFeature(key) {
+      const item = featureMap[key];
+      liveBadge.textContent = item.badge;
+      liveTitle.textContent = item.title;
+      liveText.textContent = item.text;
+      interactiveArea.innerHTML = item.render();
+      attachMiniInteractions(key);
+    }
+
+    function attachMiniInteractions(key) {
+      if (key === "grid") {
+        const buttons = interactiveArea.querySelectorAll(".mini-toggle");
+        const preview = document.getElementById("gridPreview");
+        buttons.forEach(btn => {
+          btn.addEventListener("click", () => {
+            buttons.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            preview.className = "grid-preview " + btn.dataset.grid;
+          });
+        });
+      }
+
+      if (key === "samples") {
+        const slider = document.getElementById("sampleSlider");
+        const sampleValue = document.getElementById("sampleValue");
+        const sampleTime = document.getElementById("sampleTime");
+
+        const update = () => {
+          const val = Number(slider.value);
+          sampleValue.textContent = val;
+          sampleTime.textContent = (0.2 + val / 400).toFixed(1) + " s";
+        };
+
+        slider.addEventListener("input", update);
+        update();
+      }
+
+      if (key === "export") {
+        const button = interactiveArea.querySelector(".export-button");
+        button.addEventListener("click", () => {
+          const original = button.textContent;
+          button.textContent = "Export complete";
+          setTimeout(() => {
+            button.textContent = original;
+          }, 1200);
+        });
+      }
+    }
+
+    featureSelect.addEventListener("change", e => {
+      renderFeature(e.target.value);
+    });
+
+    renderFeature("vectorized");
+
+    document.querySelectorAll(".glow-panel").forEach(panel => {
+      panel.addEventListener("mousemove", e => {
+        const rect = panel.getBoundingClientRect();
+        panel.style.setProperty("--mx", `${e.clientX - rect.left}px`);
+        panel.style.setProperty("--my", `${e.clientY - rect.top}px`);
+      });
+    });
+  </script>
 </body>
 </html>
