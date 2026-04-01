@@ -3,16 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>CalcSX — Superconducting Coil Analysis</title>
+
   <meta
     name="description"
     content="CalcSX is a desktop tool for superconducting coil analysis with B-field, Lorentz force density, hoop stress, geometry inference, and exportable results."
   />
-  <link rel="icon" type="image/png" href="favicon.png?v=4" media="(prefers-color-scheme: dark)">
-  <link rel="icon" type="image/png" href="favicon-light.png?v=4" media="(prefers-color-scheme: light)">
-  <link rel="shortcut icon" href="favicon.ico?v=4">
-  <link rel="apple-touch-icon" href="app-icon.png?v=4">
-  <meta name="theme-color" content="#020203">
+
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fbfaf4">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#020203">
+
+  <link id="favicon" rel="icon" type="image/png">
+
+  <link rel="apple-touch-icon" href="app-icon-light.png?v=5">
+
+  <script>
+    (function () {
+      const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+      function setFavicon() {
+        const link = document.getElementById("favicon");
+        if (!link) return;
+
+        link.href = darkQuery.matches
+          ? "favicon.png?v=5"
+          : "favicon-light.png?v=5";
+      }
+
+      setFavicon();
+
+      if (darkQuery.addEventListener) {
+        darkQuery.addEventListener("change", setFavicon);
+      } else {
+        darkQuery.addListener(setFavicon);
+      }
+    })();
+  </script>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
