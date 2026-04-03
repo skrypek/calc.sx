@@ -384,7 +384,8 @@ main {
   justify-content: center;
 }
 
-.hero-icon-card {
+.hero-icon-card,
+.hero-screenshot-card {
   width: min(100%, 460px);
   padding: 1rem;
   border-radius: 26px;
@@ -393,12 +394,14 @@ main {
 }
 
 @media (prefers-color-scheme: light) {
-  .hero-icon-card {
+  .hero-icon-card,
+  .hero-screenshot-card {
     background: linear-gradient(180deg, rgba(255, 252, 244, 0.96), rgba(243, 240, 228, 0.92));
   }
 }
 
-.hero-icon {
+.hero-icon,
+.hero-screenshot {
   width: 100%;
   display: block;
   border-radius: 20px;
@@ -409,6 +412,157 @@ main {
   margin-top: 0.85rem;
   color: var(--muted);
   text-align: center;
+}
+
+/* ── Version tag ── */
+.version-tag {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 800;
+  padding: 0.18rem 0.4rem;
+  border-radius: 6px;
+  background: rgba(255, 122, 26, 0.16);
+  color: var(--accent);
+  vertical-align: middle;
+  margin-left: 0.3rem;
+  letter-spacing: 0.04em;
+}
+
+@media (prefers-color-scheme: light) {
+  .version-tag {
+    background: rgba(46, 207, 197, 0.16);
+    color: var(--accent-2);
+  }
+}
+
+/* ── Screenshot placeholders ── */
+.screenshot-showcase {
+  margin-top: 2rem;
+}
+
+.showcase-img {
+  width: 100%;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  display: block;
+}
+
+.screenshot-placeholder {
+  margin-top: 0.9rem;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.screenshot-placeholder img,
+.screenshot-placeholder-sm img {
+  width: 100%;
+  display: block;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+}
+
+.workflow-img,
+.interface-img,
+.gallery-img {
+  width: 100%;
+  display: block;
+  border-radius: var(--radius-sm);
+}
+
+/* ── 3D Viewer (hero-embedded) ── */
+.hero-viewer-card {
+  width: min(100%, 460px);
+  border-radius: 26px;
+  border: 1px solid var(--line-strong);
+  background: linear-gradient(180deg, rgba(12, 14, 20, 0.96), rgba(8, 10, 14, 0.92));
+  overflow: hidden;
+}
+
+@media (prefers-color-scheme: light) {
+  .hero-viewer-card {
+    background: linear-gradient(180deg, rgba(255, 252, 244, 0.96), rgba(243, 240, 228, 0.92));
+  }
+}
+
+.viewer-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.viewer-toolbar-compact {
+  padding: 0.7rem 0.9rem;
+  gap: 0.7rem;
+}
+
+.layer-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  border: 1px solid var(--line-strong);
+  color: var(--muted);
+  background: rgba(255,255,255,0.03);
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  user-select: none;
+}
+
+.layer-btn:hover {
+  transform: translateY(-1px);
+}
+
+.layer-btn.active {
+  color: #050607;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+  background-size: 150% 100%;
+  background-position: 50% 50%;
+  border-color: transparent;
+}
+
+.viewer-container {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  background: #0a0c14;
+}
+
+.viewer-container-hero {
+  aspect-ratio: 4 / 3;
+  border-radius: 0 0 22px 22px;
+}
+
+@media (prefers-color-scheme: light) {
+  .viewer-container {
+    background: #f3f0e4;
+  }
+}
+
+.viewer-container canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.viewer-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.viewer-placeholder-text {
+  color: var(--muted);
+  font-size: 0.95rem;
 }
 
 .feature-strip {
@@ -474,12 +628,25 @@ main {
 
 .timeline {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
 }
 
 .timeline-item {
   padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-item .screenshot-placeholder {
+  margin-top: auto;
+}
+
+.timeline-item .screenshot-placeholder img,
+.timeline-item .screenshot-placeholder-sm img {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: left center;
 }
 
 .step {
@@ -531,6 +698,8 @@ main {
 .tab-button.active {
   color: #040506;
   background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+  background-size: 150% 100%;
+  background-position: 50% 50%;
   border-color: transparent;
 }
 
