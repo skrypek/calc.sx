@@ -2,14 +2,36 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
-const COIL_IDS = ["1", "2", "3", "4", "5", "6", "7", "8"];
+// ── Demo configurations ──
+const DEMOS = [
+  {
+    name: "tokamak",
+    coilIds: ["1","2","3","4","5","6","7","8"],
+    dark: "demos/weblayers",
+    light: "demos/weblayers-light",
+  },
+  {
+    name: "solenoid",
+    coilIds: ["1","2","3","4","5"],
+    dark: "demos/weblayers-solenoid-dark",
+    light: "demos/weblayers-solenoid-light",
+  },
+  {
+    name: "wonky",
+    coilIds: ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],
+    dark: "demos/weblayers-wonky-dark",
+    light: "demos/weblayers-wonky-light",
+  },
+];
+
+const demo = DEMOS[Math.floor(Math.random() * DEMOS.length)];
 
 function isDark() {
   return window.matchMedia("(prefers-color-scheme: dark)").matches;
 }
 
 function baseDir() {
-  return isDark() ? "weblayers" : "weblayers-light";
+  return isDark() ? demo.dark : demo.light;
 }
 
 const container = document.getElementById("viewer3d");
@@ -78,9 +100,13 @@ function loadFile(url, groupKey) {
       url,
       (gltf) => { layerGroups[groupKey].add(gltf.scene); resolve(); },
       undefined,
-      (err) => { console.warn(`Failed: ${url}`, err); resolve(); }
+      () => { resolve(); }
     );
   });
+}
+
+function fileExists(url) {
+  return fetch(url, { method: "HEAD" }).then(r => r.ok).catch(() => false);
 }
 
 function clearGroup(key) {
@@ -124,20 +150,22 @@ function syncButtons() {
   });
 }
 
-// ── Load scene from the theme-appropriate directory ──
+// ── Load scene ──
 let firstLoad = true;
 
 async function loadScene() {
   const base = baseDir();
+  const ids = demo.coilIds;
+
   for (const key of LAYER_KEYS) clearGroup(key);
 
-  // Coils + b_axis (fast)
+  // Phase 1: coils + b_axis
   const fastPromises = [
-    ...COIL_IDS.flatMap(id => [
+    ...ids.flatMap(id => [
       loadFile(`${base}/coil_coil_${id}_tube.gltf`, "coils"),
       loadFile(`${base}/coil_coil_${id}_wire.gltf`, "coils"),
     ]),
-    ...COIL_IDS.map(id => loadFile(`${base}/coil_${id}_b_axis.gltf`, "baxis")),
+    ...ids.map(id => loadFile(`${base}/coil_${id}_b_axis.gltf`, "baxis")),
   ];
   await Promise.all(fastPromises);
 
@@ -146,16 +174,13 @@ async function loadScene() {
   if (firstLoad) { fitCamera(); firstLoad = false; }
   syncButtons();
 
-  // Field lines (deferred) — global if it exists, otherwise per-coil
-  const globalUrl = `${base}/global_field_lines.gltf`;
-  const perCoilUrl = `${base}/coil_1_field_lines.gltf`;
-  const hasGlobal = await fetch(globalUrl, { method: "HEAD" }).then(r => r.ok).catch(() => false);
-
+  // Phase 2: field lines — global if available, otherwise per-coil
+  const hasGlobal = await fileExists(`${base}/global_field_lines.gltf`);
   if (hasGlobal) {
-    await loadFile(globalUrl, "fieldlines");
+    await loadFile(`${base}/global_field_lines.gltf`, "fieldlines");
   } else {
     await Promise.all(
-      COIL_IDS.map(id => loadFile(`${base}/coil_${id}_field_lines.gltf`, "fieldlines"))
+      ids.map(id => loadFile(`${base}/coil_${id}_field_lines.gltf`, "fieldlines"))
     );
   }
   syncButtons();
