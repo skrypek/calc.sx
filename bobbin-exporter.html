@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>CalcSX Bobbin Exporter — Fusion 360 Add-in for Winding Channel Export</title>
+
+  <meta
+    name="description"
+    content="Fusion 360 add-in that extracts winding channels from multi-groove bobbin CAD models. Exports .bobsx files containing centerlines, groove-floor surface normals, and optional bobbin mesh — ready to import into CalcSX for magnetostatic analysis."
+  />
+
+  <meta name="keywords" content="Fusion 360 bobbin exporter, .bobsx format, winding channel export, groove centerline extraction, surface normals CAD, superconducting bobbin CAD, CalcSX add-in, multi-groove bobbin, Union-Find chaining">
+
+  <link rel="canonical" href="https://calc.sx/bobbin-exporter.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="CalcSX">
+  <meta property="og:title" content="CalcSX Bobbin Exporter — Fusion 360 Add-in for Winding Channel Export">
+  <meta property="og:description" content="Fusion 360 add-in that extracts winding channels from multi-groove bobbin CAD to .bobsx — centerlines, surface normals, and optional bobbin mesh for CalcSX.">
+  <meta property="og:url" content="https://calc.sx/bobbin-exporter.html">
+  <meta property="og:image" content="https://calc.sx/app-icon.png">
+  <meta property="og:image:width" content="1500">
+  <meta property="og:image:height" content="1500">
+
+  <!-- Twitter / X card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CalcSX Bobbin Exporter — Fusion 360 Add-in for Winding Channel Export">
+  <meta name="twitter:description" content="Fusion 360 add-in that extracts winding channels from multi-groove bobbin CAD to .bobsx — centerlines, surface normals, and optional bobbin mesh for CalcSX.">
+  <meta name="twitter:image" content="https://calc.sx/app-icon.png">
+
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fbfaf4">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#020203">
+
+  <link id="favicon" rel="icon" type="image/png">
+  <link rel="apple-touch-icon" href="app-icon-light.png?v=5">
+
+  <script>
+    (function () {
+      const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      function setFavicon() {
+        const link = document.getElementById("favicon");
+        if (!link) return;
+        link.href = darkQuery.matches ? "favicon.png?v=5" : "favicon-light.png?v=5";
+      }
+      setFavicon();
+      if (darkQuery.addEventListener) darkQuery.addEventListener("change", setFavicon);
+      else darkQuery.addListener(setFavicon);
+    })();
+  </script>
+  <link rel="stylesheet" href="styles.css?v=29" />
+</head>
+<body>
+  <div class="bg-orb orb-yellow"></div>
+  <div class="bg-orb orb-cyan"></div>
+  <div class="bg-orb orb-violet"></div>
+  <div class="bg-grid"></div>
+
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="index.html">
+        <picture>
+          <source srcset="Icon_dark.png?v=1" media="(prefers-color-scheme: dark)">
+          <img class="brand-logo" src="Icon_light.png?v=1" alt="CalcSX app icon" />
+        </picture>
+        <div>
+          <div class="brand-name">CalcSX<span class="tm">™</span> <span class="version-tag">v2.3.0</span></div>
+          <div class="brand-sub">Magnetostatics simulation for superconducting coils</div>
+        </div>
+      </a>
+      <nav class="nav">
+        <a href="index.html#features">Features</a>
+        <a href="index.html#workflow">Workflow</a>
+        <a href="index.html#download">Download</a>
+        <a href="bobbin-exporter.html" class="active nav-wip" aria-disabled="true" title="Work in progress — coming soon">Bobbin exporter</a>
+        <a href="https://github.com/skrypek/calcsx" target="_blank" rel="noreferrer">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ═══════════ HERO ═══════════ -->
+    <section class="hero panel glow-panel">
+      <div class="hero-copy">
+        <div class="eyebrow">Fusion 360 pipeline</div>
+        <h1>
+          From your bobbin CAD
+          <span class="accent">to analysis-ready layers</span>
+          in one export.
+        </h1>
+        <p class="hero-text">
+          The CalcSX Fusion 360 add-in walks your bobbin's groove geometry,
+          extracts winding-channel centerlines and surface normals, and writes
+          a <code>.bobsx</code> file that CalcSX imports directly — preserving
+          tape-stack orientation without PCA fallback.
+        </p>
+
+        <div class="hero-actions">
+          <a class="button button-primary" href="https://github.com/skrypek/bobsx" target="_blank" rel="noreferrer">
+            View Repository
+          </a>
+          <a class="button button-secondary" href="#pipeline">
+            How it works
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-card">
+            <div class="stat-value">.bobsx</div>
+            <div class="stat-label">Native coil format</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">n-groove</div>
+            <div class="stat-label">Multi-channel bobbins</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">∇</div>
+            <div class="stat-label">Surface normals</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">⎔</div>
+            <div class="stat-label">Optional mesh</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="img-placeholder img-placeholder-hero">
+          <div class="img-placeholder-label">Screenshot</div>
+          <div class="img-placeholder-desc">
+            Fusion 360 with a superconducting-magnet bobbin model open.
+            Winding grooves are highlighted in the accent color; a CalcSX
+            panel on the right shows an "Export .bobsx" button with the
+            detected groove count and centerline length.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ WHY ═══════════ -->
+    <section class="section">
+      <div class="section-head">
+        <div class="eyebrow">Why a dedicated exporter</div>
+        <h2>CAD geometry, without losing orientation</h2>
+      </div>
+
+      <div class="feature-grid">
+        <article class="panel feature-card glow-panel">
+          <div class="icon">∇</div>
+          <h3>Normals come with the coil</h3>
+          <p>Every centerline point carries the groove-floor normal from the CAD model. CalcSX uses these directly for tape-stack orientation, skipping PCA fallback and its failure modes on non-planar coils.</p>
+        </article>
+
+        <article class="panel feature-card glow-panel">
+          <div class="icon">⫸</div>
+          <h3>Multi-groove, single file</h3>
+          <p>A bobbin with N parallel winding channels exports to a single <code>.bobsx</code> containing all N coils — ordered, named, and ready for per-coil parameter overrides inside CalcSX.</p>
+        </article>
+
+        <article class="panel feature-card glow-panel">
+          <div class="icon">⎔</div>
+          <h3>Optional bobbin mesh</h3>
+          <p>You can embed the bobbin solid itself — rendered as a translucent gray shell alongside the coils in the CalcSX viewport to give physical context during inspection.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ═══════════ PIPELINE ═══════════ -->
+    <section id="pipeline" class="section">
+      <div class="section-head">
+        <div class="eyebrow">Pipeline</div>
+        <h2>How the export works</h2>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item panel">
+          <span class="step">01</span>
+          <h3>Select the bobbin body</h3>
+          <p>Pick the multi-groove bobbin in Fusion 360's browser. The add-in enumerates every face and tags geometric features ready for chaining.</p>
+          <div class="img-placeholder">
+            <div class="img-placeholder-label">Screenshot</div>
+            <div class="img-placeholder-desc">Fusion 360 viewport with a bobbin body highlighted. A CalcSX command dialog shows "Select Bobbin Body" with the picked feature name and bounding-box dimensions.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item panel">
+          <span class="step">02</span>
+          <h3>Auto-detect &amp; chain grooves</h3>
+          <p>Faces are classified as <strong>narrow</strong> (single-groove walls) or <strong>wide</strong> (multi-groove floors); a Union-Find pass merges segments across face boundaries into one continuous centerline per groove.</p>
+          <div class="img-placeholder">
+            <div class="img-placeholder-label">Diagram</div>
+            <div class="img-placeholder-desc">Cross-section of a bobbin with three parallel grooves: narrow walls tinted one color, wide floors another. Merged centerlines render as three colored curves wrapping the bobbin silhouette.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item panel">
+          <span class="step">03</span>
+          <h3>Export <code>.bobsx</code> → open in CalcSX</h3>
+          <p>Each groove is serialized with centerline points, per-point surface normals, and (optionally) the bobbin mesh. Open the file in CalcSX — coils appear in the browser with normals pre-populated, ready for analysis.</p>
+          <div class="img-placeholder">
+            <div class="img-placeholder-label">Screenshot</div>
+            <div class="img-placeholder-desc">CalcSX main window after .bobsx import. Browser lists three coils; the 3D viewport shows them as colored tubes with the translucent gray bobbin mesh behind them.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ FILE FORMAT ═══════════ -->
+    <section class="section">
+      <div class="section-head">
+        <div class="eyebrow">.bobsx format</div>
+        <h2>What's inside the file</h2>
+      </div>
+
+      <div class="feature-grid">
+        <article class="panel feature-card glow-panel">
+          <div class="icon">▤</div>
+          <h3>Centerlines</h3>
+          <p>One ordered list of <code>(x, y, z)</code> points per coil. Closed by convention — no need to duplicate the start point at the end.</p>
+        </article>
+
+        <article class="panel feature-card glow-panel">
+          <div class="icon">↗</div>
+          <h3>Surface normals</h3>
+          <p>Per-point unit vector pointing out of the groove floor. Used by <code>_build_filament_grid</code> to orient the tape stack consistently along the coil.</p>
+        </article>
+
+        <article class="panel feature-card glow-panel">
+          <div class="icon">⎔</div>
+          <h3>Bobbin mesh (optional)</h3>
+          <p>Triangulated shell of the bobbin solid itself, displayed as a translucent gray layer in the viewport. Toggle visibility independently from the coils.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ═══════════ INSTALL ═══════════ -->
+    <section id="install" class="section">
+      <div class="section-head">
+        <div class="eyebrow">Install the add-in</div>
+        <h2>Drop it into Fusion 360</h2>
+      </div>
+
+      <article class="panel download-card glow-panel download-card-single">
+        <div class="download-head">
+          <div class="download-icon download-icon-gradient">⇣</div>
+          <h3>CalcSX Exporter v1.0.1</h3>
+        </div>
+        <a class="button button-primary" href="https://github.com/skrypek/bobsx/releases/download/v1.0.1/calcsx_exporter.zip">
+          Download calcsx_exporter.zip
+        </a>
+        <p class="download-sub">Zip archive · 12 KB · Fusion 360 add-in</p>
+
+        <div class="install-steps">
+          <h4>Install</h4>
+          <ol>
+            <li>Download and unzip <code>calcsx_exporter.zip</code>.</li>
+            <li>Move the unzipped <code>calcsx_exporter</code> folder into Fusion's add-ins directory:
+              <pre class="code-box download-hash"><code># macOS
+~/Library/Application Support/Autodesk/Autodesk Fusion 360/API/AddIns/
+
+# Windows
+%APPDATA%\Autodesk\Autodesk Fusion 360\API\AddIns\</code></pre>
+            </li>
+            <li>In Fusion: <strong>Utilities → Scripts and Add-Ins → Add-Ins → CalcSX Exporter → Run</strong>.</li>
+            <li>A <strong>CalcSX</strong> panel appears in the ribbon. Pick your bobbin body → <em>Export .bobsx</em>.</li>
+          </ol>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div>CalcSX™ — magnetostatics simulation for superconducting coils</div>
+    <div class="footer-links">
+      <a href="https://github.com/skrypek/bobsx" target="_blank" rel="noreferrer">Exporter repo</a>
+      <a href="https://github.com/skrypek/calcsx" target="_blank" rel="noreferrer">CalcSX repo</a>
+      <a href="https://github.com/skrypek/calcsx/blob/main/LICENSE" target="_blank" rel="noreferrer">Apache-2.0 License</a>
+      <span>© 2026 Alexander Skrypek</span>
+    </div>
+  </footer>
+
+  <script>
+    /* ── Glow panels ── */
+    document.querySelectorAll(".glow-panel").forEach(panel => {
+      panel.addEventListener("mousemove", e => {
+        const rect = panel.getBoundingClientRect();
+        panel.style.setProperty("--mx", `${e.clientX - rect.left}px`);
+        panel.style.setProperty("--my", `${e.clientY - rect.top}px`);
+      });
+    });
+  </script>
+</body>
+</html>

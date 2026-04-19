@@ -142,7 +142,6 @@ code, pre {
   background: var(--violet);
 }
 
-.site-header,
 main,
 .site-footer {
   width: min(calc(100% - 2rem), var(--max));
@@ -150,29 +149,44 @@ main,
 }
 
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+  padding: 1.25rem 1rem 0.5rem;
+  backdrop-filter: blur(10px);
+  background: rgba(2, 2, 3, 0.55);
+  border-bottom: 1px solid var(--line);
+}
+
+@media (prefers-color-scheme: light) {
+  .site-header {
+    background: rgba(251, 250, 244, 0.65);
+  }
+}
+
+.site-header-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1.25rem 0 0.5rem;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  backdrop-filter: blur(10px);
+  width: min(100%, var(--max));
+  margin: 0 auto;
 }
 
 .brand {
   display: flex;
   align-items: center;
   gap: 0.9rem;
+  text-decoration: none;
+  color: inherit;
 }
 
 .brand-logo {
   width: 3rem;
   height: 3rem;
-  border-radius: 0.95rem;
-  object-fit: cover;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+  object-fit: contain;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.3));
 }
 
 .brand-name {
@@ -205,6 +219,32 @@ main,
 
 .nav a:hover {
   color: var(--text);
+}
+
+.nav a.active {
+  color: var(--text);
+}
+
+.nav a.nav-wip {
+  color: var(--muted);
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+  position: relative;
+}
+
+.nav a.nav-wip::after {
+  content: "WIP";
+  display: inline-block;
+  margin-left: 0.35rem;
+  padding: 0.08rem 0.4rem;
+  border-radius: 999px;
+  background: rgba(255, 75, 43, 0.18);
+  color: #ff4b2b;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  vertical-align: middle;
 }
 
 main {
@@ -335,7 +375,9 @@ main {
   justify-content: center;
   padding: 0.95rem 1.2rem;
   border-radius: 999px;
+  font: inherit;
   font-weight: 700;
+  text-decoration: none;
   transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
 
@@ -352,6 +394,16 @@ main {
   border: 1px solid var(--line-strong);
   color: var(--text);
   background: rgba(255,255,255,0.03);
+}
+
+.button-disabled,
+.button[disabled] {
+  color: var(--muted) !important;
+  background: rgba(255,255,255,0.05) !important;
+  border: 1px solid var(--line-strong) !important;
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.65;
 }
 
 .hero-stats {
@@ -453,6 +505,353 @@ main {
   overflow: hidden;
 }
 
+/* Text-described placeholder (stands in for a screenshot) */
+.img-placeholder {
+  margin-top: 0.9rem;
+  padding: 1rem 1.1rem;
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--line-strong);
+  background:
+    repeating-linear-gradient(
+      45deg,
+      rgba(255,255,255,0.015) 0 10px,
+      rgba(255,255,255,0.04) 10px 20px
+    );
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  aspect-ratio: 4 / 3;
+  justify-content: center;
+}
+
+.img-placeholder-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+}
+
+.img-placeholder-desc {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.img-placeholder-hero {
+  width: min(100%, 460px);
+  aspect-ratio: 4 / 3;
+  padding: 1.2rem 1.3rem;
+}
+
+/* Install options */
+.install-options,
+.tab-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.install-option .installer-box,
+.install-option .code-box {
+  flex: 1;
+}
+
+@media (max-width: 760px) {
+  .install-options,
+  .tab-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tab-split-triple {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+@media (max-width: 900px) {
+  .tab-split-triple {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.tab-split-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.tab-split-col .code-box {
+  flex: 1;
+}
+
+/* ── Property panel (Parameters / Analyze tabs) ── */
+.prop-panel {
+  margin: 0;
+  padding: 1rem 1.1rem;
+  background: #06080d;
+  border: 1px solid var(--line);
+  border-top: none;
+  border-radius: 0 0 16px 16px;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  color: var(--text);
+  font-size: 0.88rem;
+}
+
+.prop-panel-standalone {
+  border-top: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+@media (prefers-color-scheme: light) {
+  .prop-panel {
+    background: #f7f4e9;
+  }
+}
+
+.prop-section-head {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  margin-bottom: 0.2rem;
+}
+
+.prop-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px dashed var(--line);
+}
+
+.prop-row:last-child {
+  border-bottom: none;
+}
+
+.prop-label {
+  color: var(--muted);
+}
+
+.prop-value {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  text-align: right;
+}
+
+.prop-unit {
+  color: var(--muted);
+  font-weight: 500;
+  margin-left: 0.25rem;
+  font-size: 0.82rem;
+}
+
+/* ── Layer browser rows (Analyze tab) ── */
+.layer-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.3rem;
+}
+
+.layer-action {
+  padding: 0.4rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid var(--line-strong);
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.layer-action-primary {
+  background: linear-gradient(135deg in oklab, var(--accent), var(--accent-3));
+  color: #050607;
+  border-color: transparent;
+}
+
+.layer-row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.3rem 0;
+}
+
+.layer-check {
+  width: 1.1rem;
+  height: 1.1rem;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 4px;
+  background: rgba(46, 207, 197, 0.16);
+  color: var(--accent-2);
+  font-size: 0.72rem;
+  font-weight: 800;
+  flex: none;
+}
+
+.layer-check-stale {
+  background: rgba(255, 75, 43, 0.2);
+  color: #ff4b2b;
+}
+
+.layer-meta {
+  color: var(--muted);
+  font-size: 0.78rem;
+  margin-left: 0.15rem;
+}
+
+.layer-badge {
+  margin-left: auto;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(255, 75, 43, 0.18);
+  color: #ff4b2b;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.install-option {
+  padding: 1rem 1.1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.02);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.install-option .install-option-head {
+  margin-bottom: 0.6rem;
+}
+
+.install-option-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.install-option-head h4 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.install-option-tag {
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(255, 122, 26, 0.14);
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.install-option-desc {
+  color: var(--muted);
+  margin: 0;
+}
+
+.install-option .code-box {
+  margin: 0;
+}
+
+/* Installer window chrome (Option A) — mirrors .code-header / .code-box shape */
+.installer-header {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--line);
+  border-bottom: none;
+  border-radius: 16px 16px 0 0;
+  background: rgba(255,255,255,0.03);
+}
+
+.installer-badge {
+  width: 1.15rem;
+  height: 1.15rem;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-3));
+  color: #050607;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.installer-box {
+  margin: 0;
+  padding: 1.25rem 1.1rem 1.4rem;
+  background: #06080d;
+  border: 1px solid var(--line);
+  border-radius: 0 0 16px 16px;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+@media (prefers-color-scheme: light) {
+  .installer-box {
+    background: #f7f4e9;
+  }
+}
+
+.installer-box-single {
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.15s ease;
+}
+
+.installer-box-single:hover .installer-cta-chev {
+  color: var(--text);
+  background-image: linear-gradient(90deg, rgba(255,122,26,0.16), rgba(95,231,234,0.16));
+  border-color: transparent;
+}
+
+.installer-hero-icon {
+  width: 88px;
+  height: 88px;
+  display: block;
+  margin-bottom: 0.25rem;
+  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.35));
+}
+
+.installer-cta-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.installer-cta-sub {
+  font-size: 0.85rem;
+  color: var(--muted);
+  max-width: 28ch;
+  line-height: 1.45;
+}
+
+.installer-cta-chev {
+  margin-top: 0.6rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
 .screenshot-placeholder img,
 .screenshot-placeholder-sm img {
   width: 100%;
@@ -509,8 +908,12 @@ main {
   cursor: pointer;
   border: 1px solid var(--line-strong);
   color: var(--muted);
-  background: rgba(255,255,255,0.03);
-  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  background-color: rgba(255,255,255,0.03);
+  background-image: none;
+  background-size: 150% 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  transition: transform 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   user-select: none;
 }
 
@@ -520,9 +923,8 @@ main {
 
 .layer-btn.active {
   color: #050607;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
-  background-size: 150% 100%;
-  background-position: 50% 50%;
+  background-color: var(--accent-2);
+  background-image: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
   border-color: transparent;
 }
 
@@ -669,7 +1071,7 @@ main {
 
 .demo-layout {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
+  grid-template-columns: 1fr;
   gap: 1rem;
 }
 
@@ -974,10 +1376,109 @@ main {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
+  align-items: start;
 }
 
 .download-card {
   padding: 1.3rem;
+}
+
+.download-card-soon {
+  opacity: 0.82;
+}
+
+.download-card-single {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.download-meta {
+  font-size: 0.9rem;
+}
+
+.download-sub {
+  margin-top: 0.5rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.download-verify {
+  margin-top: 0.9rem;
+}
+
+.download-verify summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 0.4rem 0;
+  user-select: none;
+}
+
+.download-verify summary:hover {
+  color: var(--text);
+}
+
+.download-hash {
+  margin-top: 0.5rem !important;
+  font-size: 0.78rem;
+  min-height: auto !important;
+  padding: 0.7rem 0.9rem !important;
+  line-height: 1.5 !important;
+  overflow-x: auto;
+}
+
+.install-steps {
+  margin-top: 1.1rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--line);
+}
+
+.install-steps h4 {
+  margin: 0 0 0.6rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+
+.install-steps ol {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.install-steps ol li {
+  margin-bottom: 0.5rem;
+}
+
+.install-steps ol li strong {
+  color: var(--text);
+}
+
+.download-limitation {
+  margin-top: 1.1rem;
+  padding: 0.8rem 0.95rem;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 75, 43, 0.12);
+  border: 1px solid rgba(255, 75, 43, 0.28);
+  color: var(--text);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.download-head {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 0.85rem;
+}
+
+.download-head h3 {
+  margin: 0;
 }
 
 .download-icon {
@@ -989,7 +1490,18 @@ main {
   background: rgba(255,255,255,0.05);
   border: 1px solid var(--line);
   font-size: 1.2rem;
-  margin-bottom: 0.85rem;
+  flex: none;
+}
+
+.download-icon-gradient {
+  background: linear-gradient(135deg in oklab, var(--accent), var(--accent-3));
+  background-size: 160% 160%;
+  background-position: center;
+  background-origin: border-box;
+  background-clip: border-box;
+  border: none;
+  color: #050607;
+  font-weight: 800;
 }
 
 .site-footer {
@@ -1071,5 +1583,19 @@ main {
 
   .compare-row {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ── Light mode: swap yellow accent text for teal ── */
+@media (prefers-color-scheme: light) {
+  .eyebrow,
+  .img-placeholder-label,
+  .prompt {
+    color: var(--accent-2);
+  }
+
+  .install-option-tag {
+    color: var(--accent-2);
+    background: rgba(46, 207, 197, 0.14);
   }
 }

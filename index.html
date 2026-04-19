@@ -4,17 +4,65 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>CalcSX — Superconducting Coil Analysis</title>
+  <title>CalcSX — Magnetostatics Simulation for Superconducting Coils</title>
 
   <meta name="google-site-verification" content="xsDCNsNVpCQ-GAsiFArry17i7aar0sRnzzwsasg0In4" />
 
   <meta
     name="description"
-    content="CalcSX™ — desktop magnetostatics GUI for superconducting coils. B-field, Lorentz forces, hoop stress, 3D field lines, and multi-coil superposition."
+    content="CalcSX — desktop magnetostatics simulation software for superconducting coils. Biot-Savart B-field, Lorentz force density (J×B), hoop stress, 3D field lines via RK4, inductance, and multi-coil superposition. Built for fusion magnets, accelerator magnets, MRI, and HTS R&D."
   />
+
+  <meta name="keywords" content="superconducting coil simulation, magnetostatics software, Biot-Savart, REBCO magnet, Lorentz force, hoop stress HTS tape, multi-coil superposition, inductance calculation, fusion magnet design, accelerator magnet, MRI coil, Fusion 360 bobbin exporter, .calcsx, .bobsx, open source magnet software, CalcSX">
+
+  <link rel="canonical" href="https://calc.sx/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="CalcSX">
+  <meta property="og:title" content="CalcSX — Magnetostatics Simulation for Superconducting Coils">
+  <meta property="og:description" content="Desktop magnetostatics software for superconducting coils. B-field, Lorentz forces, hoop stress, 3D field lines, inductance, and multi-coil superposition.">
+  <meta property="og:url" content="https://calc.sx/">
+  <meta property="og:image" content="https://calc.sx/app-icon.png">
+  <meta property="og:image:width" content="1500">
+  <meta property="og:image:height" content="1500">
+
+  <!-- Twitter / X card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CalcSX — Magnetostatics Simulation for Superconducting Coils">
+  <meta name="twitter:description" content="Desktop magnetostatics software for superconducting coils. B-field, Lorentz forces, hoop stress, 3D field lines, inductance, and multi-coil superposition.">
+  <meta name="twitter:image" content="https://calc.sx/app-icon.png">
 
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fbfaf4">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#020203">
+
+  <!-- Structured data for Google rich results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "CalcSX",
+    "description": "Desktop magnetostatics simulation software for superconducting coils. Computes B-field via Biot-Savart, Lorentz force density (J×B), hoop stress, 3D field lines via RK4 integration, inductance, and supports full multi-coil superposition.",
+    "url": "https://calc.sx/",
+    "image": "https://calc.sx/app-icon.png",
+    "applicationCategory": "EngineeringApplication",
+    "applicationSubCategory": "Magnetostatics simulation",
+    "operatingSystem": "macOS 12.0 or later",
+    "softwareVersion": "2.3.0",
+    "downloadUrl": "https://github.com/skrypek/calcsx/releases/download/v2.3.0/CalcSX-2.3.0.dmg",
+    "license": "https://github.com/skrypek/calcsx/blob/main/LICENSE",
+    "author": {
+      "@type": "Person",
+      "name": "Alexander Skrypek"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "keywords": "superconducting coils, magnetostatics, Biot-Savart, REBCO, Lorentz force, hoop stress, inductance, Fusion 360, bobbin exporter"
+  }
+  </script>
 
   <link id="favicon" rel="icon" type="image/png">
   <link rel="apple-touch-icon" href="app-icon-light.png?v=5">
@@ -32,7 +80,7 @@
       else darkQuery.addListener(setFavicon);
     })();
   </script>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=29" />
   <script type="importmap">
   {
     "imports": {
@@ -49,22 +97,25 @@
   <div class="bg-grid"></div>
 
   <header class="site-header">
-    <div class="brand">
-      <picture>
-        <source srcset="app-icon.png" media="(prefers-color-scheme: dark)">
-        <img class="brand-logo" src="app-icon-light.png" alt="CalcSX app icon" />
-      </picture>
-      <div>
-        <div class="brand-name">CalcSX<span class="tm">™</span> <span class="version-tag">v2.1</span></div>
-        <div class="brand-sub">Magnetostatics simulation for superconducting coils</div>
-      </div>
+    <div class="site-header-inner">
+      <a class="brand" href="index.html">
+        <picture>
+          <source srcset="Icon_dark.png?v=1" media="(prefers-color-scheme: dark)">
+          <img class="brand-logo" src="Icon_light.png?v=1" alt="CalcSX app icon" />
+        </picture>
+        <div>
+          <div class="brand-name">CalcSX<span class="tm">™</span> <span class="version-tag">v2.3.0</span></div>
+          <div class="brand-sub">Magnetostatics simulation for superconducting coils</div>
+        </div>
+      </a>
+      <nav class="nav">
+        <a href="#features">Features</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#download">Download</a>
+        <a href="bobbin-exporter.html" class="nav-wip" aria-disabled="true" title="Work in progress — coming soon">Bobbin exporter</a>
+        <a href="https://github.com/skrypek/calcsx" target="_blank" rel="noreferrer">GitHub</a>
+      </nav>
     </div>
-    <nav class="nav">
-      <a href="#features">Features</a>
-      <a href="#workflow">Workflow</a>
-      <a href="#download">Download</a>
-      <a href="https://github.com/skrypek/calcsx" target="_blank" rel="noreferrer">GitHub</a>
-    </nav>
   </header>
 
   <main>
@@ -72,16 +123,14 @@
     <!-- ═══════════ HERO ═══════════ -->
     <section class="hero panel glow-panel">
       <div class="hero-copy">
-        <div class="eyebrow">Desktop simulation GUI</div>
+        <div class="eyebrow">Desktop simulation software</div>
         <h1>
           Multi-coil
           <span class="accent">magnetostatics</span>
           on your desktop.
         </h1>
         <p class="hero-text">
-          Load coil geometry. Compute B-field, Lorentz forces, hoop stress,
-          3D magnetic streamlines, and cross-section heatmaps — all with full
-          multi-coil superposition.
+          Load coil geometry. Build digital twin. Compute analytics. View everything in app.
         </p>
 
         <div class="hero-actions">
@@ -89,26 +138,26 @@
             View Repository
           </a>
           <a class="button button-secondary" href="#download">
-            Download Preview
+            Download App
           </a>
         </div>
 
         <div class="hero-stats">
           <div class="stat-card">
-            <div class="stat-value">B</div>
-            <div class="stat-label">Field &amp; streamlines</div>
+            <div class="stat-value">n-coil</div>
+            <div class="stat-label">Superposition</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">B-field</div>
+            <div class="stat-label">Streamlines &amp; cross-section</div>
           </div>
           <div class="stat-card">
             <div class="stat-value">J×B</div>
             <div class="stat-label">Force density</div>
           </div>
           <div class="stat-card">
-            <div class="stat-value">σ<sub>θ</sub></div>
-            <div class="stat-label">Hoop stress</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value">n-coil</div>
-            <div class="stat-label">Superposition</div>
+            <div class="stat-value">L</div>
+            <div class="stat-label">Inductance</div>
           </div>
         </div>
       </div>
@@ -140,37 +189,37 @@
         <article class="panel feature-card glow-panel">
           <div class="icon">◎</div>
           <h3>B-field analysis</h3>
-          <p>Vectorized Biot-Savart with Gauss-Legendre sub-filament discretization. On-axis sampling and centroid evaluation.</p>
+          <p>Vectorized Biot-Savart kernel with volumetric current via Gauss-Legendre sub-filament discretization of the REBCO winding pack. On-axis and centroid sampling, plus 2D <code>|B|</code> cross-section heatmaps sliced along the symmetry axis.</p>
         </article>
 
         <article class="panel feature-card glow-panel">
           <div class="icon">↗</div>
           <h3>Lorentz force density</h3>
-          <p>Per-segment J×B arrow glyphs colored by magnitude. Each coil sees forces from every other coil via superposition.</p>
+          <p>Per-vertex <code>J×B</code> color gradients rendered across tape-stack meshes. Every coil sees force contributions from every other coil via full multi-coil superposition.</p>
         </article>
 
         <article class="panel feature-card glow-panel">
           <div class="icon">◔</div>
           <h3>Hoop stress</h3>
-          <p>Membrane decomposition hoop stress (MPa) as a midpoint point cloud for rapid inspection of critical regions.</p>
+          <p>Membrane-decomposition hoop stress (MPa) evaluated at each segment midpoint, rendered as a point cloud for rapid inspection of critical regions.</p>
         </article>
 
         <article class="panel feature-card glow-panel">
           <div class="icon">⤳</div>
           <h3>3D field lines</h3>
-          <p>Magnetic streamlines via batched RK4 integration. Per-coil or global topology with conductor exclusion.</p>
+          <p>Magnetic streamlines via RK4 integration with conductor exclusion. Toggle between per-coil topology and a globally merged set across the whole environment.</p>
         </article>
 
         <article class="panel feature-card glow-panel">
-          <div class="icon">▦</div>
-          <h3>Cross-section heatmaps</h3>
-          <p>2D B-field magnitude sliced along the symmetry axis. Configurable grid density.</p>
+          <div class="icon">⊞</div>
+          <h3>Parametric coil generators</h3>
+          <p>Solenoid, Princeton Dee, Saddle, and CCT generators with live preview — iterate on geometry without touching a CSV. Drop straight into the multi-coil environment.</p>
         </article>
 
         <article class="panel feature-card glow-panel">
-          <div class="icon">⊕</div>
-          <h3>Multi-coil superposition</h3>
-          <p>Physics-aware environment with staleness tracking. Add, remove, or move coils and re-analyze the full field.</p>
+          <div class="icon">L</div>
+          <h3>Inductance</h3>
+          <p>Self and mutual inductance via Neumann double-line integration over the discretized filament grid, with flux-linkage cross-checks against the Biot-Savart solution. Full <code>n×n</code> matrix for any multi-coil environment.</p>
         </article>
       </div>
     </section>
@@ -186,33 +235,33 @@
         <div class="timeline-item panel">
           <span class="step">01</span>
           <h3>Load geometry</h3>
-          <p>CSV with x, y, z columns. Open loops close automatically. PCA detects the symmetry axis.</p>
+          <p>CSV with parametrized coil, a <code>.bobsx</code> file exported from Fusion 360, or a <code>.calcsx</code> containing a full environment.</p>
           <div class="screenshot-placeholder screenshot-placeholder-sm">
             <picture>
-              <source srcset="screenshots/workflow-load-dark.png" media="(prefers-color-scheme: dark)">
-              <img src="screenshots/workflow-load-light.png" alt="Loading a CSV coil" class="workflow-img" />
+              <source srcset="screenshots/workflow-load-dark.png?v=2" media="(prefers-color-scheme: dark)">
+              <img src="screenshots/workflow-load-light.png?v=2" alt="Loading a CSV coil in CalcSX" class="workflow-img" />
             </picture>
           </div>
         </div>
         <div class="timeline-item panel">
           <span class="step">02</span>
           <h3>Set parameters &amp; analyze</h3>
-          <p>Configure winds, current, tape dimensions. Run analysis — B-field, force, and stress layers appear.</p>
+          <p>Configure winds, current, tape dimensions in the Properties panel. Run an analysis to rapidly calculate B-field, force, and stress layers.</p>
           <div class="screenshot-placeholder screenshot-placeholder-sm">
             <picture>
-              <source srcset="screenshots/workflow-analyze-dark.png" media="(prefers-color-scheme: dark)">
-              <img src="screenshots/workflow-analyze-light.png" alt="Running analysis" class="workflow-img" />
+              <source srcset="screenshots/workflow-analyze-dark.png?v=2" media="(prefers-color-scheme: dark)">
+              <img src="screenshots/workflow-analyze-light.png?v=2" alt="Running analysis in CalcSX" class="workflow-img" />
             </picture>
           </div>
         </div>
         <div class="timeline-item panel">
           <span class="step">03</span>
           <h3>Inspect results</h3>
-          <p>Toggle 3D field lines, cross-section heatmaps, and layer visibility. Add coils for multi-coil superposition.</p>
+          <p>Toggle 3D field lines, cross-section heatmaps, and layer visibility. Vary your design, prototype new coils, and re-analyze live in the app.</p>
           <div class="screenshot-placeholder screenshot-placeholder-sm">
             <picture>
-              <source srcset="screenshots/workflow-inspect-dark.png" media="(prefers-color-scheme: dark)">
-              <img src="screenshots/workflow-inspect-light.png" alt="Inspection tools" class="workflow-img" />
+              <source srcset="screenshots/workflow-inspect-dark.png?v=2" media="(prefers-color-scheme: dark)">
+              <img src="screenshots/workflow-inspect-light.png?v=2" alt="Inspection tools in CalcSX" class="workflow-img" />
             </picture>
           </div>
         </div>
@@ -230,77 +279,208 @@
         <div class="panel tabs-panel glow-panel">
           <div class="tabs">
             <button class="tab-button active" data-tab="tab-install">Install</button>
-            <button class="tab-button" data-tab="tab-csv">CSV format</button>
+            <button class="tab-button" data-tab="tab-inputs">Inputs</button>
             <button class="tab-button" data-tab="tab-params">Parameters</button>
+            <button class="tab-button" data-tab="tab-analyze">Analyze</button>
+            <button class="tab-button" data-tab="tab-export">Export</button>
           </div>
 
           <div class="tab-content active" id="tab-install">
-            <div class="code-header">
-              <span class="dot red"></span>
-              <span class="dot yellow"></span>
-              <span class="dot green"></span>
-              <span class="file-label">terminal</span>
-            </div>
-            <pre class="code-box"><code>pip install numpy scipy pandas matplotlib \
-  PyQt5 scikit-learn pyvista pyvistaqt
+            <div class="install-options">
+              <div class="install-option">
+                <div class="install-option-head">
+                  <span class="install-option-tag">Option A</span>
+                  <h4>Download the app</h4>
+                </div>
+                <div class="installer-header">
+                  <span class="installer-badge">⇣</span>
+                  <span class="file-label">installer</span>
+                </div>
+                <a class="installer-box installer-box-single" href="#download">
+                  <picture>
+                    <source srcset="Icon_dark.png?v=1" media="(prefers-color-scheme: dark)">
+                    <img class="installer-hero-icon" src="Icon_light.png?v=1" alt="CalcSX installer icon" />
+                  </picture>
+                  <div class="installer-cta-title">Get CalcSX for macOS &amp; Windows</div>
+                  <div class="installer-cta-sub">Double-click to install. No Python, no dependencies.</div>
+                  <span class="installer-cta-chev">See downloads ↓</span>
+                </a>
+              </div>
+
+              <div class="install-option">
+                <div class="install-option-head">
+                  <span class="install-option-tag">Option B</span>
+                  <h4>Run from source</h4>
+                </div>
+                <div class="code-header">
+                  <span class="dot red"></span>
+                  <span class="dot yellow"></span>
+                  <span class="dot green"></span>
+                  <span class="file-label">terminal</span>
+                </div>
+                <pre class="code-box"><code>git clone https://github.com/skrypek/calcsx.git
+cd calcsx
+
+python -m venv .venv
+source .venv/bin/activate        # macOS / Linux
+# .venv\Scripts\activate         # Windows
+
+pip install numpy scipy pandas PyQt5 \
+  scikit-learn pyvista pyvistaqt
 
 python -m CalcSX_app.main</code></pre>
-            <p class="tab-note">Python 3.9+. Apple Silicon supported via pip (VTK 9.2+).</p>
+              </div>
+            </div>
           </div>
 
-          <div class="tab-content" id="tab-csv">
-            <div class="code-header">
-              <span class="dot red"></span>
-              <span class="dot yellow"></span>
-              <span class="dot green"></span>
-              <span class="file-label">coil.csv</span>
-            </div>
-            <pre class="code-box"><code>x,y,z
-0.1000,0.0000,0.0000
-0.0707,0.0707,0.0010
-0.0000,0.1000,0.0020
--0.0707,0.0707,0.0010
--0.1000,0.0000,0.0000
+          <div class="tab-content" id="tab-inputs">
+            <div class="tab-split tab-split-triple">
+              <div class="tab-split-col">
+                <div class="code-header">
+                  <span class="dot red"></span>
+                  <span class="dot yellow"></span>
+                  <span class="dot green"></span>
+                  <span class="file-label">coil.csv</span>
+                </div>
+                <pre class="code-box"><code>x,y,z
+ 0.1000, 0.0000, 0.0000
+ 0.0707, 0.0707, 0.0010
+ 0.0000, 0.1000, 0.0020
+-0.0707, 0.0707, 0.0010
+-0.1000, 0.0000, 0.0000
 ...</code></pre>
-            <p class="tab-note">Three columns, case-sensitive. Open loops close automatically.</p>
+                <p class="tab-note">Three columns, case-sensitive. Open loops auto-close; axis detected via PCA.</p>
+              </div>
+
+              <div class="tab-split-col">
+                <div class="code-header">
+                  <span class="dot red"></span>
+                  <span class="dot yellow"></span>
+                  <span class="dot green"></span>
+                  <span class="file-label">bobbin.bobsx</span>
+                </div>
+                <pre class="code-box"><code>From the Fusion 360 exporter:
+
+  · N centerlines (one per groove)
+  · per-point surface normals
+  · optional bobbin mesh shell</code></pre>
+                <p class="tab-note">Explicit normals skip PCA — tape orientation preserved from CAD. See the <a href="bobbin-exporter.html">Bobbin exporter</a>.</p>
+              </div>
+
+              <div class="tab-split-col">
+                <div class="code-header">
+                  <span class="dot red"></span>
+                  <span class="dot yellow"></span>
+                  <span class="dot green"></span>
+                  <span class="file-label">session.calcsx</span>
+                </div>
+                <pre class="code-box"><code>Full CalcSX session:
+
+  · all coils + transforms
+  · per-coil parameters
+  · cached analysis layers
+  · bobbin meshes
+  · camera, theme, visibility</code></pre>
+                <p class="tab-note">Round-trip-safe session file — reopen exactly where you left off, no recomputation.</p>
+              </div>
+            </div>
           </div>
 
           <div class="tab-content" id="tab-params">
-            <div class="code-header">
-              <span class="dot red"></span>
-              <span class="dot yellow"></span>
-              <span class="dot green"></span>
-              <span class="file-label">coil parameters</span>
+            <div class="prop-panel prop-panel-standalone">
+              <div class="prop-section">
+                <div class="prop-section-head">Winding pack</div>
+                <div class="prop-row">
+                  <span class="prop-label">Winds</span>
+                  <span class="prop-value">180</span>
+                </div>
+                <div class="prop-row">
+                  <span class="prop-label">Current</span>
+                  <span class="prop-value">680 <span class="prop-unit">A</span></span>
+                </div>
+                <div class="prop-row">
+                  <span class="prop-label">Tape thickness</span>
+                  <span class="prop-value">0.10 <span class="prop-unit">mm</span></span>
+                </div>
+                <div class="prop-row">
+                  <span class="prop-label">Tape width</span>
+                  <span class="prop-value">4.0 <span class="prop-unit">mm</span></span>
+                </div>
+              </div>
+
+              <div class="prop-section">
+                <div class="prop-section-head">Transform (Construct tab)</div>
+                <div class="prop-row">
+                  <span class="prop-label">Translation</span>
+                  <span class="prop-value">0.120, 0.000, 0.085 <span class="prop-unit">m</span></span>
+                </div>
+                <div class="prop-row">
+                  <span class="prop-label">Rotation</span>
+                  <span class="prop-value">0°, 45°, 0°</span>
+                </div>
+              </div>
             </div>
-            <pre class="code-box"><code>  Winds          Winding turns
-  Current        Operating current (A)
-  Tape thickness REBCO radial dim
-  Tape width     REBCO axial extent
+          </div>
 
-Sub-filament grid: 1×1 → 4×4
-  (auto-scaled by winding geometry)</code></pre>
-            <p class="tab-note">Volumetric current via Gauss-Legendre sub-filament discretization.</p>
+          <div class="tab-content" id="tab-analyze">
+            <div class="prop-panel prop-panel-standalone">
+              <div class="prop-section">
+                <div class="prop-section-head">Coil 1</div>
+                <div class="layer-row"><span class="layer-check">✓</span> B-field <span class="layer-meta">Biot-Savart, on-axis + centroid</span></div>
+                <div class="layer-row"><span class="layer-check">✓</span> Forces <span class="layer-meta">J × B per-vertex gradient</span></div>
+                <div class="layer-row"><span class="layer-check">✓</span> Hoop stress <span class="layer-meta">σ<sub>θ</sub> midpoint cloud</span></div>
+                <div class="layer-row"><span class="layer-check">✓</span> Field lines <span class="layer-meta">RK4, per-coil</span></div>
+              </div>
+
+              <div class="prop-section">
+                <div class="prop-section-head">Inspect (global)</div>
+                <div class="layer-row"><span class="layer-check">✓</span> Global field lines <span class="layer-meta">merged RK4 across all coils</span></div>
+                <div class="layer-row"><span class="layer-check">✓</span> Cross-section <span class="layer-meta">2D |B| slice, configurable grid</span></div>
+              </div>
+
+              <div class="prop-section">
+                <div class="prop-section-head">Instrumentation</div>
+                <div class="layer-row"><span class="layer-check">✓</span> Hall probes <span class="layer-meta">virtual point sensors — B<sub>x</sub>, B<sub>y</sub>, B<sub>z</sub>, |B| for digital-twin calibration</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-content" id="tab-export">
+            <div class="tab-split">
+              <div class="tab-split-col">
+                <div class="code-header">
+                  <span class="dot red"></span>
+                  <span class="dot yellow"></span>
+                  <span class="dot green"></span>
+                  <span class="file-label">session.calcsx</span>
+                </div>
+                <pre class="code-box"><code>Share the full working state.
+
+Drop a .calcsx into Slack, email, or
+Git — collaborators reopen the
+identical scene with every computed
+layer intact, no recomputation
+required.</code></pre>
+              </div>
+
+              <div class="tab-split-col">
+                <div class="code-header">
+                  <span class="dot red"></span>
+                  <span class="dot yellow"></span>
+                  <span class="dot green"></span>
+                  <span class="file-label">paraview.vtk</span>
+                </div>
+                <pre class="code-box"><code>ParaView-ready bundle:
+
+  · field lines       → .vtp
+  · J × B force arrows → .vtp
+  · σθ point cloud    → .vtp
+  · |B| heatmap slice → .vti</code></pre>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="panel live-panel glow-panel">
-          <div class="terminal-box" style="border:none; margin:0;">
-            <div class="terminal-line"><span class="prompt">calc.sx</span> loading coil_A.csv ...</div>
-            <div class="terminal-line"><span class="prompt">calc.sx</span> PCA axis: [0, 0, 1]</div>
-            <div class="terminal-line"><span class="prompt">calc.sx</span> analyzing — B, J×B, σθ</div>
-            <div class="terminal-line"><span class="prompt">calc.sx</span> loading coil_B.csv ...</div>
-            <div class="terminal-line"><span class="prompt">calc.sx</span> re-analyzing — superposition</div>
-            <div class="terminal-line"><span class="prompt">calc.sx</span> tracing field lines (RK4)</div>
-            <div class="terminal-line"><span class="prompt">calc.sx</span> ready — 2 coils, 6 layers</div>
-          </div>
-
-          <div class="screenshot-placeholder" style="margin-top:1rem;">
-            <picture>
-              <source srcset="screenshots/terminal-dark.png" media="(prefers-color-scheme: dark)">
-              <img src="screenshots/terminal-light.png" alt="CalcSX in action" class="workflow-img" />
-            </picture>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -309,26 +489,59 @@ Sub-filament grid: 1×1 → 4×4
       <div class="section-head">
         <div class="eyebrow">Download</div>
         <h2>Get CalcSX</h2>
-        <p>Run from source today, or watch for signed desktop builds.</p>
+        <p>macOS build available now. Windows signed build planned.</p>
       </div>
 
       <div class="download-grid">
-        <article class="panel download-card glow-panel">
-          <div class="download-icon">⊞</div>
-          <h3>Windows</h3>
-          <p>Signed build planned. Run from source now.</p>
-          <a class="button button-primary" href="test-download.txt" download>
-            Download test file
-          </a>
+        <article class="panel download-card glow-panel download-card-soon">
+          <div class="download-head">
+            <div class="download-icon">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
+                <rect x="2" y="2" width="9" height="9" rx="1.2"/>
+                <rect x="13" y="2" width="9" height="9" rx="1.2"/>
+                <rect x="2" y="13" width="9" height="9" rx="1.2"/>
+                <rect x="13" y="13" width="9" height="9" rx="1.2"/>
+              </svg>
+            </div>
+            <h3>Windows</h3>
+          </div>
+          <button class="button button-primary button-disabled" type="button" disabled>
+            Download CalcSX-2.3.0.exe
+          </button>
+          <p class="download-sub">Signed build planned.</p>
+
+          <p class="download-limitation"><strong>Coming soon.</strong></p>
         </article>
 
         <article class="panel download-card glow-panel">
-          <div class="download-icon">⌘</div>
-          <h3>Mac</h3>
-          <p>Signed build planned. Apple Silicon supported.</p>
-          <a class="button button-primary" href="test-download.txt" download>
-            Download test file
+          <div class="download-head">
+            <div class="download-icon">⌘</div>
+            <h3>macOS</h3>
+          </div>
+          <a class="button button-primary" href="https://github.com/skrypek/calcsx/releases/download/v2.3.0/CalcSX-2.3.0.dmg">
+            Download CalcSX-2.3.0.dmg
           </a>
+          <p class="download-sub">Disk image · 472 MB · min macOS 12.0</p>
+
+          <details class="download-verify">
+            <summary>Verify SHA-256</summary>
+            <pre class="code-box download-hash"><code>c6a724a58a827b72feff95cf49ed8f072e83ae41a480fb3689b3c588fa2218e9  CalcSX-2.3.0.dmg</code></pre>
+            <p class="tab-note">After downloading, run <code>shasum -a 256 ~/Downloads/CalcSX-2.3.0.dmg</code> and confirm the hash matches.</p>
+          </details>
+
+          <div class="install-steps">
+            <h4>Install</h4>
+            <ol>
+              <li>Double-click the downloaded <code>.dmg</code>.</li>
+              <li>Drag <strong>CalcSX.app</strong> into <strong>/Applications</strong>.</li>
+              <li><strong>First launch:</strong> right-click the app in <code>/Applications</code> → <strong>Open</strong> → confirm. Gatekeeper blocks a normal double-click because this build is ad-hoc signed.</li>
+              <li>If macOS still blocks it, run in Terminal:
+                <pre class="code-box download-hash"><code>xattr -dr com.apple.quarantine /Applications/CalcSX.app</code></pre>
+              </li>
+            </ol>
+          </div>
+
+          <p class="download-limitation"><strong>Known limitation:</strong> this build is ad-hoc signed. A notarized release is coming.</p>
         </article>
       </div>
     </section>
@@ -338,7 +551,7 @@ Sub-filament grid: 1×1 → 4×4
     <div>CalcSX™ — magnetostatics simulation for superconducting coils</div>
     <div class="footer-links">
       <a href="https://github.com/skrypek/calcsx" target="_blank" rel="noreferrer">Repository</a>
-      <span>MIT License</span>
+      <a href="https://github.com/skrypek/calcsx/blob/main/LICENSE" target="_blank" rel="noreferrer">Apache-2.0 License</a>
       <span>© 2026 Alexander Skrypek</span>
     </div>
   </footer>

@@ -5,10 +5,17 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 // ── Demo configurations ──
 const DEMOS = [
   {
+    name: "original",
+    coilIds: ["1","2","3","4","5","6","7","8"],
+    fieldLineIds: ["1","2","3","4"],
+    dark: "demos/weblayers-original-dark",
+    light: "demos/weblayers-original-light",
+  },
+  {
     name: "tokamak",
     coilIds: ["1","2","3","4","5","6","7","8"],
-    dark: "demos/weblayers",
-    light: "demos/weblayers-light",
+    dark: "demos/weblayers-tokamak-dark",
+    light: "demos/weblayers-tokamak-light",
   },
   {
     name: "solenoid",
@@ -17,10 +24,10 @@ const DEMOS = [
     light: "demos/weblayers-solenoid-light",
   },
   {
-    name: "wonky",
-    coilIds: ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],
-    dark: "demos/weblayers-wonky-dark",
-    light: "demos/weblayers-wonky-light",
+    name: "tritio",
+    coilIds: ["1","2","3","4"],
+    dark: "demos/weblayers-tritio-dark",
+    light: "demos/weblayers-tritio-light",
   },
 ];
 
@@ -43,6 +50,16 @@ const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.outputColorSpace = THREE.SRGBColorSpace || "srgb";
 container.appendChild(renderer.domElement);
+
+// Force a repaint of the toolbar after WebGL context creation —
+// some browsers skip painting siblings while the canvas layer initializes.
+requestAnimationFrame(() => {
+  const toolbar = document.querySelector(".viewer-toolbar");
+  if (!toolbar) return;
+  toolbar.style.display = "none";
+  void toolbar.offsetHeight;
+  toolbar.style.display = "";
+});
 
 function applyThemeBg() {
   renderer.setClearColor(isDark() ? 0x0a0c14 : 0xf3f0e4, 1);
@@ -86,6 +103,10 @@ function colorizeCoils() {
     if (child.isMesh && child.material) {
       child.material.map = null;
       child.material.color.copy(gray);
+      if (!child.userData.isBobbin) {
+        child.material.transparent = false;
+        child.material.opacity = 1;
+      }
       child.material.needsUpdate = true;
     }
   });
@@ -99,6 +120,32 @@ function loadFile(url, groupKey) {
     loader.load(
       url,
       (gltf) => { layerGroups[groupKey].add(gltf.scene); resolve(); },
+      undefined,
+      () => { resolve(); }
+    );
+  });
+}
+
+function loadBobbin(url) {
+  return new Promise((resolve) => {
+    loader.load(
+      url,
+      (gltf) => {
+        const gray = isDark() ? new THREE.Color(0.72, 0.72, 0.72) : new THREE.Color(0.55, 0.55, 0.55);
+        gltf.scene.traverse((child) => {
+          if (child.isMesh && child.material) {
+            child.material.map = null;
+            child.material.color.copy(gray);
+            child.material.transparent = true;
+            child.material.opacity = 0.25;
+            child.material.depthWrite = false;
+            child.material.needsUpdate = true;
+            child.userData.isBobbin = true;
+          }
+        });
+        layerGroups.coils.add(gltf.scene);
+        resolve();
+      },
       undefined,
       () => { resolve(); }
     );
@@ -159,13 +206,16 @@ async function loadScene() {
 
   for (const key of LAYER_KEYS) clearGroup(key);
 
-  // Phase 1: coils + b_axis
+  // Phase 1: coils + b_axis (+ optional bobbin)
+  const bobbinUrl = `${base}/bobbin_1_bobbin.gltf`;
+  const hasBobbin = await fileExists(bobbinUrl);
   const fastPromises = [
     ...ids.flatMap(id => [
       loadFile(`${base}/coil_coil_${id}_tube.gltf`, "coils"),
       loadFile(`${base}/coil_coil_${id}_wire.gltf`, "coils"),
     ]),
     ...ids.map(id => loadFile(`${base}/coil_${id}_b_axis.gltf`, "baxis")),
+    ...(hasBobbin ? [loadBobbin(bobbinUrl)] : []),
   ];
   await Promise.all(fastPromises);
 
@@ -179,8 +229,9 @@ async function loadScene() {
   if (hasGlobal) {
     await loadFile(`${base}/global_field_lines.gltf`, "fieldlines");
   } else {
+    const fieldIds = demo.fieldLineIds ?? ids;
     await Promise.all(
-      ids.map(id => loadFile(`${base}/coil_${id}_field_lines.gltf`, "fieldlines"))
+      fieldIds.map(id => loadFile(`${base}/coil_${id}_field_lines.gltf`, "fieldlines"))
     );
   }
   syncButtons();
