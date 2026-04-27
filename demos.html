@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>CalcSX Demos — Downloadable .calcsx Sessions</title>
+
+  <meta
+    name="description"
+    content="Downloadable CalcSX sessions — open .calcsx files of real superconducting-magnet studies: solenoids, tokamak TF coils, tritium-breeding coils, and more. Reproducible geometry, parameters, and computed analysis layers."
+  />
+
+  <meta name="keywords" content="CalcSX demos, .calcsx sessions, superconducting coil examples, tokamak TF coils, solenoid simulation, REBCO demo files, magnetostatic case study">
+
+  <link rel="canonical" href="https://calc.sx/demos.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="CalcSX">
+  <meta property="og:title" content="CalcSX Demos — Downloadable .calcsx Sessions">
+  <meta property="og:description" content="Downloadable CalcSX sessions — real superconducting-magnet case studies. Open in CalcSX, inspect geometry, tweak parameters, recompute.">
+  <meta property="og:url" content="https://calc.sx/demos.html">
+  <meta property="og:image" content="https://calc.sx/app-icon.png">
+  <meta property="og:image:width" content="1500">
+  <meta property="og:image:height" content="1500">
+
+  <!-- Twitter / X card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CalcSX Demos — Downloadable .calcsx Sessions">
+  <meta name="twitter:description" content="Downloadable CalcSX sessions — real superconducting-magnet case studies. Open in CalcSX, inspect geometry, tweak parameters, recompute.">
+  <meta name="twitter:image" content="https://calc.sx/app-icon.png">
+
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fbfaf4">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#020203">
+
+  <link id="favicon" rel="icon" type="image/png">
+  <link rel="apple-touch-icon" href="app-icon-light.png?v=5">
+
+  <script>
+    (function () {
+      const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      function setFavicon() {
+        const link = document.getElementById("favicon");
+        if (!link) return;
+        link.href = darkQuery.matches ? "favicon.png?v=5" : "favicon-light.png?v=5";
+      }
+      setFavicon();
+      if (darkQuery.addEventListener) darkQuery.addEventListener("change", setFavicon);
+      else darkQuery.addListener(setFavicon);
+    })();
+  </script>
+  <link rel="stylesheet" href="styles.css?v=31" />
+</head>
+<body>
+  <div class="bg-orb orb-yellow"></div>
+  <div class="bg-orb orb-cyan"></div>
+  <div class="bg-orb orb-violet"></div>
+  <div class="bg-grid"></div>
+
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="index.html">
+        <picture>
+          <source srcset="Icon_dark.png?v=1" media="(prefers-color-scheme: dark)">
+          <img class="brand-logo" src="Icon_light.png?v=1" alt="CalcSX app icon" />
+        </picture>
+        <div>
+          <div class="brand-name">CalcSX<span class="tm">™</span> <span class="version-tag">v2.3.0</span></div>
+          <div class="brand-sub">Magnetostatics simulation for superconducting coils</div>
+        </div>
+      </a>
+      <nav class="nav">
+        <a href="index.html#workflow">Workflow</a>
+        <a href="index.html#download">Download</a>
+        <a href="bobbin-exporter.html" class="nav-wip" aria-disabled="true" title="Work in progress — coming soon">Bobbin exporter</a>
+        <a href="demos.html" class="active nav-wip" aria-disabled="true" title="Work in progress — coming soon">Demos</a>
+        <a href="https://github.com/skrypek/calcsx" target="_blank" rel="noreferrer">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ═══════════ HERO ═══════════ -->
+    <section class="hero panel glow-panel">
+      <div class="hero-copy">
+        <div class="eyebrow">Demo library</div>
+        <h1>
+          Real magnet studies,
+          <span class="accent">in a single click.</span>
+        </h1>
+        <p class="hero-text">
+          Download a <code>.calcsx</code> session and open it in CalcSX — every
+          coil, every parameter, every computed layer is exactly as it was when
+          the file was saved. Tweak a current, re-analyze, or just explore the
+          geometry in the viewport.
+        </p>
+
+        <div class="hero-actions">
+          <a class="button button-primary" href="index.html#download">
+            Download CalcSX
+          </a>
+          <a class="button button-secondary" href="#catalog">
+            Browse demos
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="img-placeholder img-placeholder-hero">
+          <div class="img-placeholder-label">Screenshot</div>
+          <div class="img-placeholder-desc">
+            CalcSX viewport showing a tokamak TF-coil set with global field
+            lines traced and a cross-section heatmap slicing the bore. Loaded
+            from a .calcsx demo session in under a second.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ CATALOG ═══════════ -->
+    <section id="catalog" class="section">
+      <div class="section-head">
+        <div class="eyebrow">Catalog</div>
+        <h2>Pick a session to explore</h2>
+      </div>
+
+      <div class="feature-grid">
+        <article class="panel feature-card glow-panel">
+          <div class="icon">◎</div>
+          <h3>Solenoid · 5 coils</h3>
+          <p>Classic stack of REBCO solenoid pancakes. On-axis B-field, per-segment forces, and hoop-stress midpoint cloud precomputed.</p>
+          <div class="demo-card-actions">
+            <a class="button button-primary button-disabled" aria-disabled="true">Download .calcsx</a>
+          </div>
+        </article>
+
+        <article class="panel feature-card glow-panel">
+          <div class="icon">⤳</div>
+          <h3>Tokamak TF · 8 coils</h3>
+          <p>Eight-coil toroidal-field array with global field lines traced across the full topology. Full multi-coil superposition preserved in the session.</p>
+          <div class="demo-card-actions">
+            <a class="button button-primary button-disabled" aria-disabled="true">Download .calcsx</a>
+          </div>
+        </article>
+
+        <article class="panel feature-card glow-panel">
+          <div class="icon">⎔</div>
+          <h3>Tritio · 4 coils + bobbin</h3>
+          <p>Imported from a Fusion 360 bobbin via the <a href="bobbin-exporter.html">.bobsx exporter</a>. Includes the translucent bobbin mesh and groove-floor normals.</p>
+          <div class="demo-card-actions">
+            <a class="button button-primary button-disabled" aria-disabled="true">Download .calcsx</a>
+          </div>
+        </article>
+
+        <article class="panel feature-card glow-panel">
+          <div class="icon">◔</div>
+          <h3>Original · 8 coils</h3>
+          <p>The original CalcSX reference set — a mixed-geometry baseline used during development. Good starting point for quick experiments.</p>
+          <div class="demo-card-actions">
+            <a class="button button-primary button-disabled" aria-disabled="true">Download .calcsx</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ═══════════ HOW TO USE ═══════════ -->
+    <section class="section">
+      <div class="section-head">
+        <div class="eyebrow">How to use</div>
+        <h2>Three steps</h2>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item panel">
+          <span class="step">01</span>
+          <h3>Install CalcSX</h3>
+          <p>If you haven't already, grab the macOS build from the <a href="index.html#download">Download</a> section. Drag into <code>/Applications</code>.</p>
+        </div>
+        <div class="timeline-item panel">
+          <span class="step">02</span>
+          <h3>Download a .calcsx demo</h3>
+          <p>Pick any card above. Each file bundles the full session — coils, parameters, and every computed analysis layer already cached.</p>
+        </div>
+        <div class="timeline-item panel">
+          <span class="step">03</span>
+          <h3>Open &amp; explore</h3>
+          <p>Double-click the file. CalcSX opens at the exact scene the session was saved from — no recomputation needed. Tweak a parameter, re-analyze, export ParaView bundles.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div>CalcSX™ — magnetostatics simulation for superconducting coils</div>
+    <div class="footer-links">
+      <a href="https://github.com/skrypek/calcsx" target="_blank" rel="noreferrer">Repository</a>
+      <a href="https://github.com/skrypek/calcsx/blob/main/LICENSE" target="_blank" rel="noreferrer">Apache-2.0 License</a>
+      <span>© 2026 Alexander Skrypek<a class="orcid-link" href="https://orcid.org/0009-0004-4371-5193" target="_blank" rel="noreferrer me" aria-label="ORCID iD 0009-0004-4371-5193"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path fill="#A6CE39" d="M256,128c0,70.7-57.3,128-128,128C57.3,256,0,198.7,0,128C0,57.3,57.3,0,128,0C198.7,0,256,57.3,256,128z"/><path fill="#FFFFFF" d="M86.3,186.2H70.9V79.1h15.4v48.4V186.2z"/><path fill="#FFFFFF" d="M108.9,79.1h41.6c39.6,0,57,28.3,57,53.6c0,27.5-21.5,53.6-56.8,53.6h-41.8V79.1z M124.3,172.4h24.5c34.9,0,42.9-26.5,42.9-39.7c0-21.5-13.7-39.7-43.7-39.7h-23.7V172.4z"/><path fill="#FFFFFF" d="M88.7,56.8c0,5.5-4.5,10.1-10.1,10.1c-5.6,0-10.1-4.6-10.1-10.1c0-5.6,4.5-10.1,10.1-10.1C84.2,46.7,88.7,51.3,88.7,56.8z"/></svg></a></span>
+    </div>
+  </footer>
+
+  <script>
+    /* ── Glow panels ── */
+    document.querySelectorAll(".glow-panel").forEach(panel => {
+      panel.addEventListener("mousemove", e => {
+        const rect = panel.getBoundingClientRect();
+        panel.style.setProperty("--mx", `${e.clientX - rect.left}px`);
+        panel.style.setProperty("--my", `${e.clientY - rect.top}px`);
+      });
+    });
+  </script>
+</body>
+</html>

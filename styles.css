@@ -59,6 +59,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
 }
 
 body {
@@ -1523,6 +1524,29 @@ main {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+}
+
+.orcid-link {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.45rem;
+  vertical-align: middle;
+  line-height: 0;
+  text-decoration: none;
+}
+
+.demo-card-actions {
+  margin-top: 1rem;
+}
+
+.orcid-icon {
+  width: 1em;
+  height: 1em;
+  transition: transform 0.15s ease;
+}
+
+.orcid-link:hover .orcid-icon {
+  transform: scale(1.12);
 }
 
 @keyframes pulseSlow {
