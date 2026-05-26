@@ -4,31 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>CalcSX Demos — Downloadable .calcsx Sessions</title>
+  <title>CalcSX Demos — Example .calcsx Sessions</title>
 
   <meta
     name="description"
-    content="Downloadable CalcSX sessions — open .calcsx files of real superconducting-magnet studies: solenoids, tokamak TF coils, tritium-breeding coils, and more. Reproducible geometry, parameters, and computed analysis layers."
+    content="Downloadable example CalcSX sessions: solenoid, tokamak, prototype bobbin, non-planar magnet. Open in CalcSX to inspect geometry, parameters, and cached analysis layers."
   />
 
-  <meta name="keywords" content="CalcSX demos, .calcsx sessions, superconducting coil examples, tokamak TF coils, solenoid simulation, REBCO demo files, magnetostatic case study">
+  <meta name="keywords" content="CalcSX demos, .calcsx sessions, superconducting coil examples, tokamak simulation, solenoid simulation, REBCO demo files">
 
   <link rel="canonical" href="https://calc.sx/demos.html">
 
-  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="CalcSX">
-  <meta property="og:title" content="CalcSX Demos — Downloadable .calcsx Sessions">
-  <meta property="og:description" content="Downloadable CalcSX sessions — real superconducting-magnet case studies. Open in CalcSX, inspect geometry, tweak parameters, recompute.">
+  <meta property="og:title" content="CalcSX Demos — Example .calcsx Sessions">
+  <meta property="og:description" content="Example CalcSX sessions you can download and open. Solenoid, tokamak, tritio (P3), and deutero (P2).">
   <meta property="og:url" content="https://calc.sx/demos.html">
   <meta property="og:image" content="https://calc.sx/app-icon.png">
-  <meta property="og:image:width" content="1500">
-  <meta property="og:image:height" content="1500">
 
-  <!-- Twitter / X card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="CalcSX Demos — Downloadable .calcsx Sessions">
-  <meta name="twitter:description" content="Downloadable CalcSX sessions — real superconducting-magnet case studies. Open in CalcSX, inspect geometry, tweak parameters, recompute.">
+  <meta name="twitter:title" content="CalcSX Demos — Example .calcsx Sessions">
+  <meta name="twitter:description" content="Example CalcSX sessions you can download and open.">
   <meta name="twitter:image" content="https://calc.sx/app-icon.png">
 
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fbfaf4">
@@ -50,21 +46,9 @@
       else darkQuery.addListener(setFavicon);
     })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=35" />
-  <script type="importmap">
-  {
-    "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.module.js",
-      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/"
-    }
-  }
-  </script>
+  <link rel="stylesheet" href="styles.css?v=39" />
 </head>
-<body>
-  <div class="bg-orb orb-yellow"></div>
-  <div class="bg-orb orb-cyan"></div>
-  <div class="bg-orb orb-violet"></div>
-  <div class="bg-grid"></div>
+<body class="doc-page">
 
   <header class="site-header">
     <div class="site-header-inner">
@@ -81,127 +65,51 @@
       <nav class="nav">
         <a href="index.html#workflow">Workflow</a>
         <a href="index.html#download">Download</a>
-        <a href="bobbin-exporter.html" class="nav-wip" aria-disabled="true" title="Work in progress — coming soon">Bobbin exporter</a>
-        <a href="demos.html" class="active nav-wip" aria-disabled="true" title="Work in progress — coming soon">Demos</a>
+        <a href="bobbin-exporter.html">Bobbin exporter</a>
+        <a href="demos.html" class="active">Demos</a>
         <a href="https://github.com/skrypek/calcsx" target="_blank" rel="noreferrer">GitHub</a>
       </nav>
     </div>
   </header>
 
-  <main>
+  <main class="doc">
+    <article>
+      <header class="doc-head">
+        <p class="overline">Example sessions</p>
+        <h1>Demos</h1>
+        <p class="lead">Example <code>.calcsx</code> sessions. Download a file and open it in CalcSX.</p>
+      </header>
 
-    <!-- ═══════════ HERO ═══════════ -->
-    <section class="hero panel glow-panel">
-      <div class="hero-copy">
-        <div class="eyebrow">Demo library</div>
-        <h1>
-          Real magnet studies,
-          <span class="accent">in a single click.</span>
-        </h1>
-        <p class="hero-text">
-          Download a <code>.calcsx</code> session and open it in CalcSX — every
-          coil, every parameter, every computed layer is exactly as it was when
-          the file was saved. Tweak a current, re-analyze, or just explore the
-          geometry in the viewport.
-        </p>
+      <section>
+        <h2>Download</h2>
+        <table class="demo-table">
+          <thead>
+            <tr><th>Name</th><th>Download</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Deutero (P2)<sup>*</sup></td>
+              <td><a href="https://github.com/skrypek/calc.sx/releases/download/demos-v1/deutero.calcsx">deutero.calcsx</a></td>
+            </tr>
+            <tr>
+              <td>Tritio (P3)</td>
+              <td><a href="https://github.com/skrypek/calc.sx/releases/download/demos-v1/tritio.calcsx">tritio.calcsx</a></td>
+            </tr>
+            <tr>
+              <td>Simple tokamak</td>
+              <td><a href="https://github.com/skrypek/calc.sx/releases/download/demos-v1/simple_tokamak.calcsx">simple_tokamak.calcsx</a></td>
+            </tr>
+            <tr>
+              <td>Solenoid</td>
+              <td><a href="https://github.com/skrypek/calc.sx/releases/download/demos-v1/solenoid.calcsx">solenoid.calcsx</a></td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Open any <code>.calcsx</code> in <a href="index.html#download">CalcSX</a> and the scene reloads with every cached analysis layer intact.</p>
 
-        <div class="hero-actions">
-          <a class="button button-primary" href="index.html#download">
-            Download CalcSX
-          </a>
-          <a class="button button-secondary" href="#catalog">
-            Browse demos
-          </a>
-        </div>
-      </div>
-
-      <div class="hero-visual">
-        <div class="hero-viewer-card">
-          <div class="viewer-toolbar viewer-toolbar-compact">
-            <button class="layer-btn active" data-layer="coils">Coils</button>
-            <button class="layer-btn active" data-layer="fieldlines">Field lines</button>
-            <button class="layer-btn active" data-layer="baxis">On-axis B</button>
-          </div>
-          <div class="viewer-container viewer-container-hero" id="viewer3d">
-            <div class="viewer-placeholder">
-              <div class="viewer-placeholder-text">Loading 3D scene...</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════ CATALOG ═══════════ -->
-    <section id="catalog" class="section">
-      <div class="section-head">
-        <div class="eyebrow">Catalog</div>
-        <h2>Pick a session to explore</h2>
-      </div>
-
-      <div class="feature-grid">
-        <article class="panel feature-card glow-panel">
-          <div class="icon">◎</div>
-          <h3>Solenoid · 5 coils</h3>
-          <p>Classic stack of REBCO solenoid pancakes. On-axis B-field, per-segment forces, and hoop-stress midpoint cloud precomputed.</p>
-          <div class="demo-card-actions">
-            <a class="button button-primary button-disabled" aria-disabled="true">Download .calcsx</a>
-          </div>
-        </article>
-
-        <article class="panel feature-card glow-panel">
-          <div class="icon">⤳</div>
-          <h3>Tokamak TF · 8 coils</h3>
-          <p>Eight-coil toroidal-field array with global field lines traced across the full topology. Full multi-coil superposition preserved in the session.</p>
-          <div class="demo-card-actions">
-            <a class="button button-primary button-disabled" aria-disabled="true">Download .calcsx</a>
-          </div>
-        </article>
-
-        <article class="panel feature-card glow-panel">
-          <div class="icon">⎔</div>
-          <h3>Tritio · 4 coils + bobbin</h3>
-          <p>Imported from a Fusion 360 bobbin via the <a href="bobbin-exporter.html">.bobsx exporter</a>. Includes the translucent bobbin mesh and groove-floor normals.</p>
-          <div class="demo-card-actions">
-            <a class="button button-primary button-disabled" aria-disabled="true">Download .calcsx</a>
-          </div>
-        </article>
-
-        <article class="panel feature-card glow-panel">
-          <div class="icon">◔</div>
-          <h3>Original · 8 coils</h3>
-          <p>The original CalcSX reference set — a mixed-geometry baseline used during development. Good starting point for quick experiments.</p>
-          <div class="demo-card-actions">
-            <a class="button button-primary button-disabled" aria-disabled="true">Download .calcsx</a>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- ═══════════ HOW TO USE ═══════════ -->
-    <section class="section">
-      <div class="section-head">
-        <div class="eyebrow">How to use</div>
-        <h2>Three steps</h2>
-      </div>
-
-      <div class="timeline">
-        <div class="timeline-item panel">
-          <span class="step">01</span>
-          <h3>Install CalcSX</h3>
-          <p>If you haven't already, grab the macOS build from the <a href="index.html#download">Download</a> section. Drag into <code>/Applications</code>.</p>
-        </div>
-        <div class="timeline-item panel">
-          <span class="step">02</span>
-          <h3>Download a .calcsx demo</h3>
-          <p>Pick any card above. Each file bundles the full session — coils, parameters, and every computed analysis layer already cached.</p>
-        </div>
-        <div class="timeline-item panel">
-          <span class="step">03</span>
-          <h3>Open &amp; explore</h3>
-          <p>Double-click the file. CalcSX opens at the exact scene the session was saved from — no recomputation needed. Tweak a parameter, re-analyze, export ParaView bundles.</p>
-        </div>
-      </div>
-    </section>
+        <p class="footnote" id="fn-deutero"><sup>*</sup>Deutero is the nickname for the P2 magnet from the <a href="https://ieeexplore.ieee.org/document/11482058" target="_blank" rel="noreferrer">published IEEE paper</a>. The demo simulation is set up for direct comparison against the reported experimental measurements.</p>
+      </section>
+    </article>
   </main>
 
   <footer class="site-footer">
@@ -213,16 +121,5 @@
     </div>
   </footer>
 
-  <script>
-    /* ── Glow panels ── */
-    document.querySelectorAll(".glow-panel").forEach(panel => {
-      panel.addEventListener("mousemove", e => {
-        const rect = panel.getBoundingClientRect();
-        panel.style.setProperty("--mx", `${e.clientX - rect.left}px`);
-        panel.style.setProperty("--my", `${e.clientY - rect.top}px`);
-      });
-    });
-  </script>
-  <script type="module" src="viewer.js"></script>
 </body>
 </html>

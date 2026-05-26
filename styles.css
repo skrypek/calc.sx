@@ -1952,3 +1952,60 @@ body.doc-page .nav a {
     background: rgba(52, 44, 18, 0.08) !important;
   }
 }
+
+/* ── Demo download table ── */
+.demo-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.5rem 0 1rem;
+  font-size: 0.95rem;
+}
+
+.demo-table th,
+.demo-table td {
+  text-align: left;
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.demo-table thead th {
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  font-weight: 700;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.demo-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.demo-table td:first-child {
+  font-weight: 600;
+}
+
+.demo-table td:last-child {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.88rem;
+}
+
+/* ── Footnotes ── */
+.footnote {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-top: 1.5rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--line);
+}
+
+.footnote sup {
+  margin-right: 0.25em;
+}
+
+.footnote-ref {
+  text-decoration: none;
+  color: var(--accent-3);
+  font-weight: 700;
+}
