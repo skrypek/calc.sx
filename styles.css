@@ -1623,3 +1623,332 @@ main {
     background: rgba(46, 207, 197, 0.14);
   }
 }
+/* ─────────────────────────────────────────────────────────────
+   DOCUMENT LAYOUT (research-software style — overrides marketing
+   chrome from the old hero/feature-grid/timeline patterns)
+   ───────────────────────────────────────────────────────────── */
+
+body.doc-page {
+  background: var(--bg);
+  font-feature-settings: "kern", "liga", "calt", "ss01";
+}
+
+main.doc {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 4.5rem;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text);
+}
+
+@media (max-width: 760px) {
+  main.doc {
+    padding: 1.5rem 1.1rem 3rem;
+  }
+}
+
+.doc article > * + * {
+  margin-top: 1rem;
+}
+
+.doc-head {
+  margin: 0 0 1.25rem;
+}
+
+.doc-head .overline {
+  margin: 0 0 0.5rem;
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.doc h1 {
+  font-size: 2.3rem;
+  font-weight: 700;
+  margin: 0 0 0.4rem;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.doc .lead {
+  font-size: 1.12rem;
+  color: var(--muted);
+  margin: 0;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.doc h2 {
+  font-size: 1.32rem;
+  font-weight: 700;
+  margin: 2.75rem 0 0.85rem;
+  letter-spacing: -0.01em;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.doc h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 1.6rem 0 0.5rem;
+}
+
+.doc section {
+  margin-bottom: 0;
+}
+
+.doc p,
+.doc ul,
+.doc ol,
+.doc dl,
+.doc blockquote {
+  margin: 0 0 1rem;
+}
+
+.doc ul,
+.doc ol {
+  padding-left: 1.4rem;
+}
+
+.doc li {
+  margin-bottom: 0.45rem;
+}
+
+.doc a {
+  color: var(--accent-3);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.doc a:hover {
+  text-decoration-thickness: 2px;
+}
+
+.doc code {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.88em;
+  background: rgba(255,255,255,0.06);
+  padding: 0.08em 0.4em;
+  border-radius: 4px;
+  border: 1px solid var(--line);
+}
+
+@media (prefers-color-scheme: light) {
+  .doc code {
+    background: rgba(52, 44, 18, 0.05);
+  }
+}
+
+.doc pre {
+  margin: 0.6rem 0;
+  padding: 0.85rem 1rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+.doc pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+@media (prefers-color-scheme: light) {
+  .doc pre {
+    background: rgba(52, 44, 18, 0.04);
+  }
+}
+
+.doc dl.dl-table {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.55rem 1.5rem;
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: rgba(255,255,255,0.02);
+}
+
+@media (prefers-color-scheme: light) {
+  .doc dl.dl-table {
+    background: rgba(52, 44, 18, 0.025);
+  }
+}
+
+.doc dt {
+  color: var(--muted);
+  font-weight: 500;
+  margin: 0;
+}
+
+.doc dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.doc blockquote {
+  margin: 1rem 0 0;
+  padding: 0.85rem 1.15rem;
+  border-left: 3px solid var(--accent-3);
+  background: rgba(255,255,255,0.03);
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+@media (prefers-color-scheme: light) {
+  .doc blockquote {
+    background: rgba(52, 44, 18, 0.04);
+  }
+}
+
+.doc figure {
+  margin: 1.5rem 0;
+  padding: 0;
+}
+
+.doc figcaption {
+  margin-top: 0.65rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.doc figure img {
+  width: 100%;
+  display: block;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+}
+
+.viewer-figure {
+  margin: 1.5rem 0 2.25rem;
+}
+
+.viewer-figure .viewer-container {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 6px;
+  border: 1px solid var(--line-strong);
+  position: relative;
+  overflow: hidden;
+  background: #0a0c14;
+}
+
+@media (prefers-color-scheme: light) {
+  .viewer-figure .viewer-container {
+    background: #f3f0e4;
+  }
+}
+
+.viewer-figure .viewer-toolbar {
+  margin-top: 0.75rem;
+  padding: 0;
+  border: none;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.download-button {
+  display: inline-block;
+  padding: 0.7rem 1.3rem;
+  background: var(--accent-3);
+  color: #050607 !important;
+  font-weight: 700;
+  text-decoration: none !important;
+  border-radius: 6px;
+  margin: 0.3rem 0;
+}
+
+.download-button:hover {
+  filter: brightness(1.08);
+}
+
+.hash {
+  font-size: 0.85rem;
+  margin: 0.6rem 0 1.2rem;
+}
+
+.hash code {
+  word-break: break-all;
+  font-size: 0.78em;
+}
+
+.note {
+  margin: 1rem 0 1.2rem;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid #ff4b2b;
+  background: rgba(255, 75, 43, 0.08);
+}
+
+.note p {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.resources li em {
+  color: var(--muted);
+  font-style: normal;
+  font-size: 0.85rem;
+  margin-left: 0.2rem;
+}
+
+/* Slim the header chrome when in document layout */
+body.doc-page .site-header {
+  padding-top: 0.9rem;
+  padding-bottom: 0.9rem;
+}
+
+body.doc-page .brand-logo {
+  width: 2.1rem;
+  height: 2.1rem;
+}
+
+body.doc-page .brand-name {
+  font-size: 1rem;
+}
+
+body.doc-page .brand-sub {
+  display: none;
+}
+
+body.doc-page .version-tag {
+  font-size: 0.7rem;
+  padding: 0.1rem 0.4rem;
+  margin-left: 0.2rem;
+}
+
+body.doc-page .nav a {
+  font-size: 0.9rem;
+}
+
+.doc h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 1.4rem 0 0.5rem;
+  color: var(--text);
+}
+
+.download-button-disabled {
+  background: rgba(255,255,255,0.08) !important;
+  color: var(--muted) !important;
+  cursor: not-allowed;
+  pointer-events: none;
+  font-style: italic;
+}
+
+@media (prefers-color-scheme: light) {
+  .download-button-disabled {
+    background: rgba(52, 44, 18, 0.08) !important;
+  }
+}
